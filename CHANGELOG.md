@@ -5,6 +5,7 @@
 - Preserved compatibility with legacy CardTruth 0.2.0 report envelopes.
 - Added CI/release consistency checks, repository governance docs, and an explicit accuracy contract.
 - Added one-command local verification targets and cleaned generated-artifact handling.
+- Made GitHub CI self-contained and excluded editable-install metadata from deterministic source manifests.
 
 # 0.2.0
 

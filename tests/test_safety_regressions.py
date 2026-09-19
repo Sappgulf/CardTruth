@@ -6,6 +6,7 @@ from cardtruth_core.models import ConditionVector, CenteringMeasurement
 from cardtruth_core.grading import forecast
 from cardtruth_core.registration import order_quad, centering_from_border_widths
 from cardtruth_core.photometric import photometric_stereo
+from tools.update_manifest import included
 
 def sample():
     return ConditionVector.model_validate_json((Path(__file__).parents[1]/"samples/sample_condition.json").read_text())
@@ -38,3 +39,15 @@ def test_non_finite_photometry_rejected():
 
 def test_unknown_grader_is_whitelisted():
     with pytest.raises(KeyError): forecast("../../not-a-profile",sample())
+
+
+def test_manifest_ignores_editable_install_metadata():
+    egg_info = Path(__file__).parents[1] / "cardtruth.egg-info" / "PKG-INFO"
+    assert egg_info.exists(), "editable install fixture should exist in the dev environment"
+    assert not included(egg_info)
+
+
+def test_ci_is_self_contained():
+    workflow = (Path(__file__).parents[1] / ".github" / "workflows" / "ci.yml").read_text()
+    assert "- uses:" not in workflow
+    assert 'git fetch --depth=1 origin "${GITHUB_SHA}"' in workflow

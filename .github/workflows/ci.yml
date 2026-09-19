@@ -12,32 +12,55 @@ jobs:
   python-and-web:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-          cache: pip
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Install Python package
-        run: python -m pip install -e '.[dev]'
+      - name: Checkout repository without marketplace actions
+        shell: bash
+        run: |
+          git init .
+          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git fetch --depth=1 origin "${GITHUB_SHA}"
+          git checkout --detach FETCH_HEAD
+      - name: Verify bundled runtimes
+        run: |
+          python3 --version
+          node --version
+      - name: Create Python environment
+        run: |
+          python3 -m venv .venv
+          . .venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install -e '.[dev]'
       - name: Python tests
-        run: python -m pytest -q
+        run: |
+          . .venv/bin/activate
+          python -m pytest -q
       - name: Browser-core tests
         run: node --test tests/web/*.test.mjs
       - name: Rebuild standalone artifacts
-        run: python tools/build_standalone.py
+        run: |
+          . .venv/bin/activate
+          python tools/build_standalone.py
       - name: Release consistency
-        run: python tools/check_consistency.py
+        run: |
+          . .venv/bin/activate
+          python tools/check_consistency.py
       - name: Generated files are committed
         run: git diff --exit-code -- CardTruth.html services/api/static/index.html apps/ios/CardTruth/Resources/CardTruth.html
       - name: Source manifest is current
-        run: python tools/update_manifest.py --check
+        run: |
+          . .venv/bin/activate
+          python tools/update_manifest.py --check
 
   swift-core:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository without marketplace actions
+        shell: bash
+        run: |
+          git init .
+          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git fetch --depth=1 origin "${GITHUB_SHA}"
+          git checkout --detach FETCH_HEAD
+      - name: Swift version
+        run: swift --version
       - name: Swift state-machine tests
         run: cd apps/ios && swift test

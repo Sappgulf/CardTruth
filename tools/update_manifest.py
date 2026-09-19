@@ -11,7 +11,7 @@ EXCLUDED_FILES = {'MANIFEST.sha256', '.DS_Store'}
 
 def included(path: Path) -> bool:
     rel = path.relative_to(ROOT)
-    return path.is_file() and path.name not in EXCLUDED_FILES and not any(part in EXCLUDED_PARTS for part in rel.parts)
+    return path.is_file() and path.name not in EXCLUDED_FILES and not any(part in EXCLUDED_PARTS or part.endswith('.egg-info') for part in rel.parts)
 
 
 def render() -> str:
