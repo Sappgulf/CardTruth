@@ -1,0 +1,9 @@
+{
+  "display_name": "Beckett BGS",
+  "source": "https://www.beckett.com/grading/scale",
+  "centering_guidelines": [],
+  "verification": "source_unavailable",
+  "notes": "Official scale redirected to maintenance at review. Prior unverified numeric rules removed; no substituted thresholds.",
+  "version": "centering-reference-2026-09-19",
+  "reviewed_at": "2026-09-19"
+}

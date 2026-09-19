@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="color-scheme" content="light"><meta name="description" content="Private, on-device card inspection with evidence, centering measurement and no invented grades.">
+<title>CardTruth · Card inspection</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='8' y='3' width='24' height='34' rx='5' fill='%23126156'/%3E%3Cpath d='M14 19l4 4 9-10' fill='none' stroke='white' stroke-width='3'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#f4f6f7;--paper:#fff;--ink:#18262a;--muted:#637075;--line:#dce3e4;--accent:#12695c;--accent-soft:#e9f3ef;--amber:#855710;--amber-soft:#fff4db;--danger:#a33d38;--radius:14px;--font: -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.5}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;line-height:1.25;transition:background .15s;color:inherit}button:disabled{opacity:.42;cursor:not-allowed}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid #27a6a0;outline-offset:3px}button:not(:disabled):hover{filter:brightness(.97)}[hidden]{display:none!important}h1,h2,h3,p{margin-top:0}h1{font-size:34px;line-height:1.15;letter-spacing:-1.3px;margin-bottom:10px;font-weight:650}h2{font-size:21px;letter-spacing:-.45px;line-height:1.25}h3{font-size:15px;letter-spacing:-.15px;margin-bottom:10px}p{margin-bottom:16px}a{color:var(--accent)}.muted{color:var(--muted)}.small{font-size:13px;line-height:1.6}.tiny{font-size:11px;line-height:1.6}.full{width:100%}.topbar{height:77px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;background:var(--paper);border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:10px}.brand strong{font-size:21px;font-weight:650;letter-spacing:-.7px}.version{font-size:11px;font-weight:500;background:#edf1f0;color:#6c7979;border-radius:4px;padding:3px 5px;margin-left:10px;letter-spacing:0}.brand-icon{display:flex;align-items:center;justify-content:center;background:var(--accent);border-radius:9px;width:33px;height:38px}.brand-icon svg{width:23px;height:28px}.brand-icon rect{fill:none;stroke:white;stroke-width:1.4}.brand-icon path{fill:none;stroke:white;stroke-width:1.5}.top-actions{display:flex;align-items:center;gap:25px}.privacy{font-size:12px;color:#506665}.privacy span{font-size:8px;color:#217d67;padding-right:5px}.quiet{background:transparent;padding:10px 8px;font-size:13px;font-weight:550}.primary,.secondary,.light-button{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:44px;padding:12px 18px;border-radius:8px;font-size:13px;font-weight:600}.primary{background:var(--accent);color:#fff}.secondary{background:#fff;border:1px solid var(--line)}.light-button{color:#182e2d;background:#f0f5f0}.titlebar{max-width:1490px;margin:0 auto;padding:34px 36px 27px;display:flex;align-items:center;justify-content:space-between;gap:25px}.titlebar p{color:var(--muted);margin:0;font-size:14px}.workspace{max-width:1490px;margin:auto;padding:0 36px 26px;display:grid;grid-template-columns:180px minmax(320px,1fr) 286px;gap:24px;align-items:start}.workflow{padding:6px 10px 0 0;display:flex;flex-direction:column;min-height:628px}.steps{list-style:none;padding:0;margin:0}.step{display:flex;gap:13px;align-items:center;text-align:left;width:100%;padding:16px 10px;border-radius:9px;background:transparent;margin-bottom:6px}.step strong{font-size:13px;font-weight:600;display:block}.step small{font-size:11px;color:var(--muted);display:block;margin-top:3px}.step-number{border:1px solid #cdd8d6;color:#6c7c79;width:27px;height:27px;border-radius:50%;display:grid;place-items:center;font-size:12px;flex:none}.step.active{background:var(--accent-soft)}.step.active .step-number{background:var(--accent);color:white;border-color:var(--accent)}.step.active strong{color:var(--accent)}.workflow-bottom{margin-top:auto;padding-top:60px}.workflow-bottom>.small{padding:0 4px}.workflow-bottom .tiny{text-align:center;margin:17px 0 0}.image-workspace{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;min-width:0}.image-toolbar{height:60px;padding:10px 15px;display:flex;justify-content:space-between;gap:10px;align-items:center}.side-tabs{display:flex;background:#f0f3f3;border-radius:7px;padding:3px}.side-tabs button{background:transparent;border-radius:5px;font-size:12px;min-width:75px;padding:8px 12px;display:flex;align-items:center;gap:9px}.side-tabs [aria-selected=true]{background:white;box-shadow:0 1px 3px #00000013;font-weight:650}.side-dot{width:5px;height:5px;border:1px solid #94a09e;border-radius:50%;display:inline-block}.side-dot.loaded{background:#d6ac4d;border-color:#d6ac4d}.side-dot.done{background:var(--accent);border-color:var(--accent)}.image-actions{display:flex;align-items:center;gap:5px}.icon-btn{display:inline-grid;place-items:center;font-size:25px;background:transparent;width:36px;height:36px;border-radius:6px;font-weight:400}.stage{height:543px;background-color:#18232e;background-image:radial-gradient(#64788136 .65px,transparent .65px);background-size:18px 18px;overflow:auto;position:relative;padding:20px;display:flex;align-items:safe center;justify-content:safe center}.empty-stage{color:#f2f6f7;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:340px;margin:auto;padding:20px 10px}.capture-outline{width:78px;height:110px;margin:0 0 30px;color:#79958f}.capture-outline svg{height:100%;width:100%;stroke:currentColor;fill:none;stroke-width:1.5}.capture-outline rect{stroke:#405764}.capture-outline svg>path:last-child{stroke:#a9c6ba;stroke-width:2}.empty-stage h2{font-size:21px;margin-bottom:10px;letter-spacing:-.45px}.empty-stage p{font-size:13px;color:#a8b7bf;max-width:240px;line-height:1.6;margin-bottom:23px}.stage-hint{font-size:10px;color:#8da1aa;margin-top:15px}.board{position:relative;flex-shrink:0;margin:auto;box-shadow:0 10px 35px #0005;line-height:0}.board canvas{display:block;width:100%;height:100%}.board svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none;overflow:visible}.image-caption{font-size:11px;color:var(--muted);min-height:49px;display:flex;align-items:center;justify-content:space-between;padding:10px 15px;gap:10px}.zoom-controls{display:flex;align-items:center;gap:10px;flex:none}.zoom-controls button{font-size:19px;background:#f1f4f3;width:28px;height:28px;border-radius:4px}.zoom-controls span{font-size:10px;min-width:29px;text-align:center}.inspector{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:21px;min-width:0}.inspector h2{font-size:19px;margin-bottom:10px}.inspector .description{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:21px}.inspector .divider{height:1px;background:var(--line);margin:22px 0}.field{margin:14px 0}.field label{display:block;font-size:11px;font-weight:600;margin-bottom:6px;color:#4d6463}.field input,.field select,.field textarea{width:100%;font-size:13px;border:1px solid #cdd8d7;border-radius:6px;background:white;padding:9px 10px;color:var(--ink)}.field textarea{resize:vertical;min-height:68px}.number-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.number-grid .field{margin:6px 0}.number-grid input{font-variant-numeric:tabular-nums}.coordinate-help{font-size:11px;margin:10px 0;color:#69807b}.hintbox{background:#f0f5f3;border-left:3px solid #81a99d;padding:12px;font-size:12px;line-height:1.6;color:#4f6660;margin:18px 0}.hintbox.warning{background:var(--amber-soft);border-color:#d0b16e;color:var(--amber)}.metric{display:flex;justify-content:space-between;align-items:baseline;padding:13px 0;border-bottom:1px solid #e8eded;gap:10px}.metric span{font-size:12px;color:var(--muted)}.metric strong{font-size:23px;letter-spacing:-.9px;font-weight:600;font-variant-numeric:tabular-nums}.quality-item{display:flex;gap:8px;font-size:11px;color:var(--muted);margin:12px 0;line-height:1.5}.quality-item::before{content:'·';font-weight:bold;color:#b68632}.quality-item.block{color:var(--danger)}.status-line{font-size:11px;display:flex;align-items:center;gap:7px;color:#557565;margin:14px 0}.status-line::before{content:'●';font-size:7px}.pill{display:inline-flex;font-size:10px;letter-spacing:.1px;border-radius:4px;padding:4px 7px;background:#edf3f1;color:#527469}.pill.amber{color:#8c651a;background:#fff2cf}.annotation-list{padding:0;list-style:none;margin:15px 0}.annotation-list li{font-size:12px;display:flex;gap:9px;align-items:start;padding:10px 0;border-top:1px solid #e7eded}.annotation-list .remove{background:transparent;font-size:18px;color:var(--muted);margin-left:auto}.annotation-number{flex:none;display:grid;place-items:center;height:21px;width:21px;background:#e7f2ec;color:var(--accent);border-radius:50%;font-size:11px}.annotation-list small{display:block;color:var(--muted);font-size:10px;margin-top:4px;overflow-wrap:anywhere}.corner-gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:10px 15px 17px;border-top:1px solid var(--line)}.corner-gallery figure{margin:0;min-width:0}.corner-gallery canvas{width:100%;height:auto;border-radius:5px;border:1px solid var(--line);display:block;background:#17222c}.corner-gallery figcaption{font-size:9px;color:var(--muted);margin-top:6px}.reference-gallery{border-top:1px solid var(--line);padding:13px 15px;display:flex;gap:8px;flex-wrap:wrap}.reference-gallery img{height:62px;max-width:85px;object-fit:contain;background:#15222b;border-radius:4px}.reference-gallery button{padding:0;background:transparent}.reference-gallery p{width:100%;font-size:10px;margin:0;color:var(--muted)}.footer{display:flex;justify-content:space-between;gap:15px;max-width:1490px;padding:12px 36px 27px;margin:auto;font-size:11px;color:#6e7c7d}.demo-banner{background:#fff0c6;color:#795820;text-align:center;padding:9px 24px;font-size:12px;border-bottom:1px solid #e5d6b2}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#192d31;color:white;font-size:13px;padding:14px 20px;border-radius:9px;max-width:min(530px,90vw);box-shadow:0 8px 30px #0003;z-index:50;line-height:1.5}.busy{position:fixed;inset:0;z-index:60;background:#13262bb8;display:grid;place-items:center;backdrop-filter:blur(3px)}.busy>div{background:white;border-radius:15px;padding:35px 45px;text-align:center;box-shadow:0 15px 60px #0004}.busy p{margin:15px 0 7px;font-size:15px}.busy small{font-size:11px;color:var(--muted)}.spinner{display:inline-block;width:25px;height:25px;border:2px solid #dae9e3;border-top-color:var(--accent);border-radius:50%;animation:spin .75s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}dialog{padding:0;border:1px solid #d2ded9;border-radius:16px;color:var(--ink);width:min(880px,calc(100% - 28px));max-height:91vh;box-shadow:0 15px 80px #10272435}dialog::backdrop{background:#14232c80;backdrop-filter:blur(3px)}.dialog-heading{padding:26px 29px 19px;display:flex;gap:20px;justify-content:space-between;align-items:start;border-bottom:1px solid var(--line)}.dialog-heading h2{margin-bottom:8px;font-size:24px}.dialog-heading p{margin:0;font-size:12px;color:var(--muted)}.dialog-heading .icon-btn{flex:none}.dialog-footer{padding:18px 29px 24px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px;align-items:center;position:sticky;bottom:0;background:white}.dialog-footer small{font-size:11px;color:var(--muted);width:100%}#reportContent,.help-body{padding:23px 29px}.help-body{font-size:13px;color:var(--muted);line-height:1.7}.help-body h3{color:var(--ink);margin-top:24px}.help-body h3:first-child{margin-top:0}.report-verdict{background:#ecf3ef;padding:20px;border-radius:9px;margin-bottom:22px}.report-verdict h3{font-size:18px;margin:0 0 7px}.report-verdict p{font-size:12px;color:#5a6f67;margin:0}.report-table{width:100%;border-collapse:collapse;margin:15px 0 25px;font-size:12px}.report-table th{text-align:left;color:var(--muted);font-weight:500;background:#f6f8f8;padding:10px}.report-table td{padding:12px 10px;border-bottom:1px solid #e5ece9;font-variant-numeric:tabular-nums}.report-table th:last-child,.report-table td:last-child{text-align:right}.report-grader{display:grid;grid-template-columns:110px 1fr;gap:20px;padding:17px 0;border-top:1px solid var(--line)}.report-grader h3{font-size:16px;margin:0}.report-grader small{font-size:10px;display:block;margin-top:6px;color:var(--muted)}.report-grader p{font-size:12px;margin:0 0 5px}.report-grader a{font-size:10px}.report-notes{font-size:12px;color:var(--muted);line-height:1.7;padding-left:17px}.report-meta{font-size:10px;color:#78908a;overflow-wrap:anywhere;margin-top:15px}.outcome-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.outcome-grid .field{margin:0}.skip{position:absolute;top:-60px;left:12px;z-index:100;background:white;padding:12px}.skip:focus{top:10px}input[type=range]{accent-color:var(--accent)}.camera-button{margin-top:8px}.inspection-legend{font-size:10px;color:#6c817b;line-height:1.7;margin:13px 0}.report-photo-strip{display:flex;gap:12px;margin:18px 0}.report-photo-strip figure{margin:0}.report-photo-strip img{height:140px;max-width:160px;object-fit:contain;border-radius:6px;background:#12212b}.report-photo-strip figcaption{font-size:10px;color:var(--muted);margin-top:6px}.reference-dialog-img{max-width:100%;max-height:65vh;object-fit:contain}.outline-values{display:grid;grid-template-columns:1fr 1fr;gap:4px}.outline-values input{width:100%;min-width:0;font-size:11px;padding:5px;border:1px solid var(--line);border-radius:4px}.outline-values label{font-size:10px;color:var(--muted)}details{margin:14px 0}summary{font-size:12px;color:var(--accent);cursor:pointer;margin-bottom:12px}.measure-fine{font-size:10px;color:var(--muted);line-height:1.6;margin:12px 0}
+@media(min-width:1550px){.stage{height:585px}.workflow{min-height:670px}}
+@media(max-width:1150px){.workspace{grid-template-columns:148px minmax(300px,1fr) 256px;gap:16px;padding:0 22px 24px}.topbar{padding:0 24px}.titlebar{padding:30px 24px 23px}.inspector{padding:18px}.step{padding:14px 6px;gap:9px}.stage{height:510px}.workflow{min-height:590px}.footer{padding:12px 24px 22px}}
+@media(max-width:950px){.workspace{grid-template-columns:minmax(300px,1fr) 280px}.workflow{grid-column:1/-1;min-height:0;padding:0;display:block}.steps{display:flex;gap:12px}.steps li{flex:1}.step{margin:0}.step small{display:none}.workflow-bottom{padding:0;display:flex;align-items:center;gap:5px;margin-top:7px}.workflow-bottom .small,.workflow-bottom .tiny{display:none}.workflow-bottom button{width:auto;font-size:11px;padding:9px 12px;min-height:34px}.stage{height:520px}.footer{font-size:10px}.titlebar h1{font-size:30px}}
+@media(max-width:680px){.topbar{height:65px;padding:0 18px}.brand strong{font-size:20px}.top-actions{gap:10px}.privacy{display:none}.quiet{font-size:12px}.titlebar{padding:25px 18px 21px;gap:12px}.titlebar h1{font-size:26px;letter-spacing:-.9px;max-width:230px}.titlebar p{font-size:12px;line-height:1.5;max-width:240px}.titlebar>.primary{font-size:11px;min-height:40px;padding:10px 13px;gap:6px;flex:none}.workspace{display:flex;flex-direction:column;padding:0 14px 20px;gap:15px}.workflow{width:100%}.step{padding:9px 6px;gap:8px}.step strong{font-size:11px}.step-number{width:23px;height:23px;font-size:10px}.steps{gap:5px}.workflow-bottom{justify-content:flex-start;flex-wrap:wrap;gap:4px}.workflow-bottom button{font-size:10px;padding:8px}.image-workspace,.inspector{width:100%}.image-toolbar{padding:8px 11px;height:55px}.stage{height:450px;padding:18px}.inspector{padding:22px}.inspector .description{max-width:480px}.inspector h2{font-size:21px}.footer{padding:10px 18px 24px;flex-direction:column;gap:6px}.image-caption{font-size:10px;padding:9px 12px}.empty-stage h2{font-size:20px}.corner-gallery{gap:8px;padding:12px}.dialog-heading{padding:20px}.dialog-heading h2{font-size:21px}#reportContent,.help-body{padding:20px}.dialog-footer{padding:16px 20px}.report-grader{grid-template-columns:80px 1fr;gap:13px}.report-table{font-size:11px}.report-table th,.report-table td{padding:10px 6px}.report-table .optional-col{display:none}.demo-banner{font-size:11px;padding:8px 16px}.reference-gallery{padding:12px}.titlebar .primary span{display:none}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+@media print{body{background:white}body> :not(#reportDialog){display:none!important}#reportDialog{display:block!important;position:static;max-width:none;max-height:none;width:100%;box-shadow:none;border:0;overflow:visible}#reportDialog::backdrop{display:none}.dialog-footer,.dialog-heading button,.outcome-editor{display:none!important}#reportContent{overflow:visible}.report-grader,.report-table tr{break-inside:avoid}}
+
+</style>
+</head>
+<body>
+<a href="#workspace" class="skip">Skip to inspection</a>
+<header class="topbar"><div class="brand"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 30"><rect x="3" y="2" width="18" height="26" rx="4"/><path d="m7 15 3 3 7-8"/></svg></span><strong>CardTruth<span class="version">0.2</span></strong></div><div class="top-actions"><span class="privacy"><span aria-hidden="true">●</span> On-device processing</span><button class="quiet" id="helpBtn">How it works</button></div></header>
+<div id="demoBanner" class="demo-banner" hidden>Synthetic demo images. These are optical test targets, not real cards or validated grading results.</div>
+<section class="titlebar"><div><h1>Inspect before you submit.</h1><p>A closer look. Clear measurements. Evidence you can keep.</p></div><button id="reportBtn" class="primary" disabled>View report <span aria-hidden="true">↗</span></button></section>
+<main id="workspace" class="workspace">
+<aside class="workflow" aria-label="Inspection workflow">
+ <ol class="steps"><li><button data-step="photos" class="step active"><span class="step-number">1</span><span><strong>Photograph</strong><small>Front and back</small></span></button></li><li><button data-step="align" class="step"><span class="step-number">2</span><span><strong>Measure</strong><small>Confirm the borders</small></span></button></li><li><button data-step="review" class="step"><span class="step-number">3</span><span><strong>Inspect</strong><small>Review the evidence</small></span></button></li></ol>
+ <div class="workflow-bottom"><p class="small muted">Start with a bare card on a plain, matte background. Keep the camera square to it.</p><button class="secondary full" id="demoBtn">Try the demo target</button><button class="quiet full" id="importBtn">Open saved report</button><button class="quiet full" id="resetBtn">New inspection</button><p class="tiny muted">No accounts. No uploads.<br>Save your report before closing.</p></div>
+</aside>
+<section class="image-workspace" aria-label="Card images">
+ <div class="image-toolbar"><div class="side-tabs" role="tablist" aria-label="Card side"><button id="frontTab" data-side="front" role="tab" aria-selected="true">Front <span id="frontState" class="side-dot"></span></button><button id="backTab" data-side="back" role="tab" aria-selected="false">Back <span id="backState" class="side-dot"></span></button></div><div class="image-actions"><button class="icon-btn" id="rotateBtn" title="Rotate photo clockwise" aria-label="Rotate photo clockwise" disabled>↻</button><button class="quiet" id="replaceBtn">Add photo</button></div></div>
+ <div class="stage" id="stage">
+  <div class="empty-stage" id="emptyStage"><div class="capture-outline" aria-hidden="true"><svg viewBox="0 0 82 112"><path d="M19 3H7a4 4 0 0 0-4 4v12m60-16h12a4 4 0 0 1 4 4v12M3 93v12a4 4 0 0 0 4 4h12m44 0h12a4 4 0 0 0 4-4V93"/><rect x="16" y="17" width="50" height="77" rx="6"/><path d="m31 56 7 7 15-17"/></svg></div><h2>Add the front of your card</h2><p>Choose a clear photo, or use your phone’s camera.</p><button class="light-button" id="chooseBtn">Choose front photo</button><span class="stage-hint">JPEG, PNG, WebP · up to 25 MB</span></div>
+  <div class="board" id="board" hidden><canvas id="photoCanvas"></canvas><svg id="overlay" xmlns="http://www.w3.org/2000/svg" aria-label="Card outline and evidence editor"></svg></div>
+ </div>
+ <div class="image-caption"><span id="imageCaption">Photos are processed in this browser, not sent to a server.</span><div class="zoom-controls" id="zoomControls" hidden><button id="zoomOut" aria-label="Zoom out">−</button><span id="zoomLabel">100%</span><button id="zoomIn" aria-label="Zoom in">+</button></div></div>
+ <div id="cornerGallery" class="corner-gallery" hidden></div>
+ <div id="referenceGallery" class="reference-gallery" hidden></div>
+</section>
+<aside class="inspector" id="inspector" aria-label="Inspection controls"></aside>
+</main>
+<footer class="footer"><span>Measurement first. No invented certainty.</span><span>Independent inspection tool. Not an authenticated or certified grade.</span></footer>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="busy" id="busy" role="status" aria-live="polite" hidden><div><span class="spinner" aria-hidden="true"></span><p id="busyText">Preparing photo…</p><small>Your images stay on this device.</small></div></div>
+<input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" hidden>
+<input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
+<input type="file" id="referenceInput" accept="image/*" multiple hidden>
+<input type="file" id="reportInput" accept=".json,application/json" hidden>
+<dialog id="reportDialog"><div class="dialog-heading"><div><h2>Your inspection report</h2><p>What the images support, and what they don’t.</p></div><button id="closeReport" class="icon-btn" aria-label="Close report">×</button></div><div id="reportContent"></div><div class="dialog-footer"><button id="downloadBtn" class="primary">Save report + evidence</button><button id="printBtn" class="secondary">Print report</button><small>Includes analysis-size images, not your original files. Keep the originals.</small></div></dialog>
+<dialog id="helpDialog"><div class="dialog-heading"><h2>A useful inspection, not a magic grade.</h2><button id="closeHelp" class="icon-btn" aria-label="Close instructions">×</button></div><div class="help-body"><h3>1. Photograph the actual card</h3><p>Use front and back photos without a sleeve or holder. Avoid glare. Keep all four corners in frame. Do not press, flatten, clean or alter the card for this scan.</p><h3>2. Confirm the geometry</h3><p>Align the four outer handles to the intersections of the straight card edges, not the tips of rounded corners. Then align the four inner guides to the printed border’s inner boundary. Suggestions must be checked. For full-art, borderless or ambiguous designs, choose “Skip centering.”</p><h3>3. Inspect and keep evidence</h3><p>Review the enlarged corners, use extra lighting-angle photos and mark areas for closer inspection. Automatic bright-spot suggestions can also be glare or normal printing.</p><h3>What “accurate” means here</h3><p>Ratios come from the borders you confirm. Their range shows sensitivity to an assumed pixel-placement error; it is not a calibrated confidence interval. A source photograph still has lens, focus, perspective and lighting limits.</p><p>No trained grading model, verified authenticity screen, micrometer surface scanner or hardware-calibrated GradeRig is included. LiDAR is not accessed by this browser app. A published centering check is not a prediction of PSA, CGC or BGS results.</p><h3>Privacy and reopening</h3><p>There are no network uploads, analytics, logins or automatic storage. The session lives in memory until you save a report. Reopen that JSON file using “Open saved report.” The checksum detects accidental edits; it is not a digital signature or proof of when a card was photographed.</p><p>Use a normal browser. A phone’s Files or attachment preview may not run an HTML application. “Take a photo” opens device capture where supported; desktop browsers may show a file chooser. This build does not run a live-view browser camera or a LiDAR stream.</p></div></dialog>
+<script>
+(async () => {
+/** Pure, dependency-free image geometry. All defect proposals require human review. */
+const VERSION = '0.2.1';
+const REFERENCES = {
+ psa:{name:'PSA',url:'https://www.psacard.com/gradingstandards',reviewed:'2026-09-19',rules:[{label:'Gem Mint 10',front:55,back:75}]},
+ cgc:{name:'CGC',url:'https://www.cgccards.com/card-grading/grading-scale/',reviewed:'2026-09-19',rules:[{label:'Gem Mint 10',front:55,back:75},{label:'Pristine 10',front:50,back:50}]},
+ bgs:{name:'Beckett BGS',url:'https://www.beckett.com/grading/scale',reviewed:'2026-09-19',rules:[],note:'Official scale was unavailable at review. No unverified thresholds substituted.'}
+};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function axisMeasurement(a,b,error=2){
+ if(![a,b,error].every(Number.isFinite)||a<=0||b<=0||error<0||error>100)throw Error('Use positive border widths and an assumed error of 0–100 pixels.');
+ const p=100*a/(a+b),lo=100*Math.max(0,a-error)/(Math.max(0,a-error)+b+error),hi=100*(a+error)/(a+error+Math.max(0,b-error));
+ return {pair:[p,100-p],major:Math.max(p,100-p),major_interval:[lo<=50&&hi>=50?50:Math.min(Math.max(lo,100-lo),Math.max(hi,100-hi)),Math.max(hi,100-lo)],assumed_border_width_error_px:error,uncertainty_type:'sensitivity_bound_not_calibrated_CI'};
+}
+function assessInterval([lo,hi],limit){
+ if(![lo,hi,limit].every(Number.isFinite)||lo>hi)throw Error('Invalid interval');
+ return hi<=limit?'within_published_guideline':lo>limit?'outside_published_guideline':'boundary_uncertain';
+}
+function validateQuad(q){
+ if(!Array.isArray(q)||q.length!==4||q.some(p=>!Array.isArray(p)||p.length!==2||!p.every(Number.isFinite)))throw Error('Four finite corners required.');
+ let signs=[];let area=0;
+ for(let i=0;i<4;i++){
+  let a=q[i],b=q[(i+1)%4],c=q[(i+2)%4];
+  signs.push((b[0]-a[0])*(c[1]-b[1])-(b[1]-a[1])*(c[0]-b[0]));
+  area+=a[0]*b[1]-a[1]*b[0];
+ }
+ if(!(signs.every(x=>x>1e-7)||signs.every(x=>x< -1e-7))||Math.abs(area)<2)throw Error('Keep four distinct corners in order without crossing the outline.');
+ return true;
+}
+function orderQuad(q){
+ const c=q.reduce((a,p)=>[a[0]+p[0]/4,a[1]+p[1]/4],[0,0]);
+ const sorted=q.map(p=>[...p]).sort((a,b)=>Math.atan2(a[1]-c[1],a[0]-c[0])-Math.atan2(b[1]-c[1],b[0]-c[0]));
+ let k=sorted.reduce((best,p,i)=>p[0]+p[1]<sorted[best][0]+sorted[best][1]?i:best,0);
+ const result=sorted.slice(k).concat(sorted.slice(0,k));validateQuad(result);return result;
+}
+function homography(q){
+ validateQuad(q);const A=[];
+ [[0,0],[1,0],[1,1],[0,1]].forEach(([x,y],i)=>{let [u,v]=q[i];A.push([x,y,1,0,0,0,-u*x,-u*y,u]);A.push([0,0,0,x,y,1,-v*x,-v*y,v]);});
+ for(let i=0;i<8;i++){
+  let pivot=i;for(let j=i+1;j<8;j++)if(Math.abs(A[j][i])>Math.abs(A[pivot][i]))pivot=j;
+  if(Math.abs(A[pivot][i])<1e-10)throw Error('Outline cannot be rectified.');
+  [A[i],A[pivot]]=[A[pivot],A[i]];let d=A[i][i];for(let k=i;k<9;k++)A[i][k]/=d;
+  for(let j=0;j<8;j++)if(j!==i){let f=A[j][i];for(let k=i;k<9;k++)A[j][k]-=f*A[i][k];}
+ }
+ return [...A.map(row=>row[8]),1];
+}
+function project(h,x,y){let d=h[6]*x+h[7]*y+1;if(Math.abs(d)<1e-9)throw Error('Projection is singular.');return [(h[0]*x+h[1]*y+h[2])/d,(h[3]*x+h[4]*y+h[5])/d];}
+function checkImage(im){if(!im||!Number.isInteger(im.width)||!Number.isInteger(im.height)||Math.min(im.width,im.height)<2||!im.data||im.data.length!==im.width*im.height*4)throw Error('Invalid image pixels.');}
+function rectify(im,q,maxHeight=1600){
+ checkImage(im);validateQuad(q);
+ if(q.some(([x,y])=>x<0||y<0||x>im.width-1||y>im.height-1))throw Error('Keep the outline inside the photograph.');
+ const len=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
+ const nh=Math.min(len(q[0],q[3]),len(q[1],q[2])),nw=Math.min(len(q[0],q[1]),len(q[3],q[2]));
+ const height=Math.floor(Math.min(maxHeight,nh,nw*88/63)),width=Math.floor(height*63/88);
+ if(Math.min(width,height)<16)throw Error('Card covers too few pixels. Take a closer photograph.');
+ const out=new Uint8ClampedArray(width*height*4),h=homography(q),s=im.data,sw=im.width;
+ for(let y=0;y<height;y++){let v=y/(height-1);for(let x=0;x<width;x++){
+  let u=x/(width-1),z=h[6]*u+h[7]*v+1;
+  let sx=clamp((h[0]*u+h[1]*v+h[2])/z,0,im.width-1),sy=clamp((h[3]*u+h[4]*v+h[5])/z,0,im.height-1);
+  let x0=Math.floor(sx),y0=Math.floor(sy),x1=Math.min(x0+1,sw-1),y1=Math.min(y0+1,im.height-1),fx=sx-x0,fy=sy-y0;
+  let a=(y0*sw+x0)*4,b=(y0*sw+x1)*4,c=(y1*sw+x0)*4,d=(y1*sw+x1)*4,j=(y*width+x)*4;
+  for(let k=0;k<3;k++)out[j+k]=(s[a+k]*(1-fx)+s[b+k]*fx)*(1-fy)+(s[c+k]*(1-fx)+s[d+k]*fx)*fy;
+  out[j+3]=255;
+ }}return {width,height,data:out,native_short_edge:Math.min(nh,nw),geometry:'nominal_aspect_rectification_not_size_measurement'};
+}
+function proposeQuad(im){
+ checkImage(im);const scale=Math.min(1,320/Math.max(im.width,im.height)),w=Math.round(im.width*scale),h=Math.round(im.height*scale);
+ const rgb=new Uint8Array(w*h*3);const samples=[[],[],[]];
+ for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+  let src=(Math.min(im.height-1,Math.floor(y/scale))*im.width+Math.min(im.width-1,Math.floor(x/scale)))*4,j=(y*w+x)*3;
+  for(let k=0;k<3;k++){rgb[j+k]=im.data[src+k];if((x<6||x>=w-6)&&(y<6||y>=h-6))samples[k].push(rgb[j+k]);}
+ }
+ let bg=samples.map(a=>a.sort((a,b)=>a-b)[Math.floor(a.length/2)]);let mask=new Uint8Array(w*h);
+ for(let i=0;i<w*h;i++)if(Math.hypot(rgb[3*i]-bg[0],rgb[3*i+1]-bg[1],rgb[3*i+2]-bg[2])>46)mask[i]=1;
+ const queue=new Int32Array(w*h);let best=[];
+ for(let i=0;i<w*h;i++)if(mask[i]){
+  let head=0,tail=1;queue[0]=i;mask[i]=0;
+  while(head<tail){let p=queue[head++],x=p%w;
+   for(let n of [x>0?p-1:-1,x<w-1?p+1:-1,p>=w?p-w:-1,p<w*(h-1)?p+w:-1])if(n>=0&&mask[n]){mask[n]=0;queue[tail++]=n;}
+  }
+  if(tail>best.length)best=Array.from(queue.subarray(0,tail));
+ }
+ if(best.length<w*h*.07||best.length>w*h*.96)return null;
+ let q=[null,null,null,null],scores=[Infinity,-Infinity,-Infinity,Infinity];
+ for(let p of best){let x=p%w,y=Math.floor(p/w),s=x+y,d=x-y;
+  if(s<scores[0]){scores[0]=s;q[0]=[x/scale,y/scale];}
+  if(d>scores[1]){scores[1]=d;q[1]=[x/scale,y/scale];}
+  if(s>scores[2]){scores[2]=s;q[2]=[x/scale,y/scale];}
+  if(d<scores[3]){scores[3]=d;q[3]=[x/scale,y/scale];}
+ }
+ try{validateQuad(q);return q;}catch{return null;}
+}
+function proposeBorder(im){
+ checkImage(im);let w=im.width,h=im.height,data=im.data;
+ function edge(side){
+  const along=side<2?h:w,depth=side<2?w:h,max=Math.floor(depth*.16),profile=[];
+  for(let d=1;d<=max;d++){
+   let vals=[[],[],[]];for(let t=Math.floor(along*.22);t<along*.78;t+=Math.max(1,Math.floor(along/160))){
+    let x=side===0?d:side===1?w-1-d:t,y=side===2?d:side===3?h-1-d:t,j=(y*w+x)*4;
+    for(let k=0;k<3;k++)vals[k].push(data[j+k]);
+   }profile.push(vals.map(a=>a.sort((a,b)=>a-b)[Math.floor(a.length/2)]));
+  }
+  const baseline=profile[Math.min(2,profile.length-1)];let chosen=null;
+  for(let i=3;i<profile.length-2;i++){
+   let d=Math.hypot(...profile[i].map((v,k)=>v-baseline[k]));
+   let next=Math.hypot(...profile[i+2].map((v,k)=>v-baseline[k]));
+   if(d>32&&next>32){chosen=i+1;break;}
+  }return chosen;
+ }
+ let values=[0,1,2,3].map(edge);
+ return {left:values[0]??w*.045,right:values[1]??w*.045,top:values[2]??h*.035,bottom:values[3]??h*.035,suggested:values.every(v=>v!==null),method:'color_transition_proposal_requires_confirmation'};
+}
+function quality(im){
+ checkImage(im);const w=im.width,h=im.height,s=im.data;const st=Math.max(1,Math.floor(Math.max(w,h)/800));
+ let n=0,total=0,clipped=0,dark=0,ls=0,l2=0;
+ const gray=(x,y)=>{let p=(y*w+x)*4;return .2126*s[p]+.7152*s[p+1]+.0722*s[p+2];};
+ for(let y=st;y<h-st;y+=st)for(let x=st;x<w-st;x+=st){let j=(y*w+x)*4,g=gray(x,y),lap=4*g-gray(x-st,y)-gray(x+st,y)-gray(x,y-st)-gray(x,y+st);
+  n++;total+=g;ls+=lap;l2+=lap*lap;if(Math.min(s[j],s[j+1],s[j+2])>=250)clipped++;if(g<15)dark++;
+ }
+ const lap=n?Math.max(0,l2/n-(ls/n)**2):0,issues=[];const short=Math.min(w,h);
+ if(short<600)issues.push({code:'resolution',level:short<350?'block':'warning',text:`Only ${short} pixels across the short edge. Use a closer, higher-resolution photo.`});
+ if(lap<30)issues.push({code:'sharpness',level:lap<3?'block':'warning',text:'Low image detail. This may be blur or a plain area; check the original at full size.'});
+ if(n&&clipped/n>.08)issues.push({code:'clipping',level:'warning',text:'Bright pixels may hide detail. White printing can also trigger this warning; inspect for glare.'});
+ if(n&&total/n<20)issues.push({code:'exposure',level:'block',text:'Image is too dark for reliable inspection. Retake with diffuse light.'});
+ return {usable:!issues.some(i=>i.level==='block'),issues,short_edge_px:short,laplacian_variance:lap,clipped_fraction:n?clipped/n:0,mean_luminance:n?total/n:0,note:'Heuristic quality checks, not calibrated accuracy or defect coverage.'};
+}
+function edgeCandidates(im){
+ checkImage(im);const w=im.width,h=im.height,s=im.data,band=Math.max(4,Math.round(w*.022));let hits=[];
+ const step=Math.max(1,Math.floor(w/650));
+ for(let y=3;y<h-3;y+=step)for(let x=3;x<w-3;x+=step){
+  if(x>band&&x<w-1-band&&y>band&&y<h-1-band)continue;
+  let j=(y*w+x)*4;let mx=Math.max(s[j],s[j+1],s[j+2]),mn=Math.min(s[j],s[j+1],s[j+2]);
+  if(mn<218||mx-mn>30)continue;
+  let avg=0,count=0;
+  for(let [dx,dy] of [[-band,0],[band,0],[0,-band],[0,band]]){let nx=clamp(x+dx,1,w-2),ny=clamp(y+dy,1,h-2),p=(ny*w+nx)*4;avg+=(s[p]+s[p+1]+s[p+2])/3;count++;}
+  if(mn-avg/count<38)continue;
+  if(!hits.some(p=>Math.hypot(p.x*w-x,p.y*h-y)<band*2))hits.push({id:`suggestion-${hits.length+1}`,x:x/w,y:y/h,label:'Bright edge spot',evidence:'inferred',note:'Contrast suggestion only. Could be reflection, printing or wear; inspect the original.'});
+  if(hits.length>=12)return hits;
+ }return hits;
+}
+function standardsSummary(front,back){
+ return Object.entries(REFERENCES).map(([id,p])=>({id,name:p.name,source:p.url,reviewed_at:p.reviewed,scope:'centering_only',grade_withheld:true,
+  checks:p.rules.map(rule=>{
+   if(!front||!back)return {label:rule.label,status:'not_measured',front_limit:rule.front,back_limit:rule.back};
+   const f=[Math.max(front.lr.major_interval[0],front.tb.major_interval[0]),Math.max(front.lr.major_interval[1],front.tb.major_interval[1])];
+   const b=[Math.max(back.lr.major_interval[0],back.tb.major_interval[0]),Math.max(back.lr.major_interval[1],back.tb.major_interval[1])];
+   let states=[assessInterval(f,rule.front),assessInterval(b,rule.back)];
+   return {label:rule.label,status:states.includes('outside_published_guideline')?'outside_published_guideline':states.includes('boundary_uncertain')?'boundary_uncertain':'within_published_guideline',front_limit:rule.front,back_limit:rule.back};
+  }),note:p.note??'Approximate published guidelines only. Meeting centering does not establish the grade.'}));
+}
+
+/** Local input/export only. No network, accounts, analytics or remote inference. */
+const MAX_BYTES=25*1024*1024;
+const MAX_PIXELS=50_000_000;
+const REPORT_FORMAT_VERSION='1';
+const REPORT_HASH_SCOPE='cardtruth-canonical-json-v1';
+function stableStringify(value){
+ const seen=new WeakSet();
+ const normalize=v=>{
+  if(v===null||typeof v!=='object')return v;
+  if(seen.has(v))throw Error('Cannot serialize circular report data.');
+  seen.add(v);
+  try{
+   if(Array.isArray(v))return v.map(normalize);
+   return Object.fromEntries(Object.keys(v).sort().filter(k=>v[k]!==undefined).map(k=>[k,normalize(v[k])]));
+  }finally{seen.delete(v);}
+ };
+ return JSON.stringify(normalize(value));
+}
+async function sha256(data){
+ if(!globalThis.crypto?.subtle)return sha256Portable(data);
+ let bytes=typeof data==='string'?new TextEncoder().encode(data):data;
+ let hash=await crypto.subtle.digest('SHA-256',bytes);
+ return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function decodeURL(url,maxDimension=2200){
+ const img=new Image();
+ await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(Error('This browser could not decode the photo. Use a JPEG, PNG or WebP export.'));img.src=url;});
+ if(img.naturalWidth*img.naturalHeight>MAX_PIXELS)throw Error('Photo is larger than 50 megapixels. Export a smaller copy.');
+ if(Math.min(img.naturalWidth,img.naturalHeight)<32)throw Error('Photo is too small. Use the original card photograph.');
+ const ratio=Math.min(1,maxDimension/Math.max(img.naturalWidth,img.naturalHeight));
+ const canvas=document.createElement('canvas');canvas.width=Math.round(img.naturalWidth*ratio);canvas.height=Math.round(img.naturalHeight*ratio);
+ const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.fillStyle='#161b23';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
+ return {pixels:ctx.getImageData(0,0,canvas.width,canvas.height),original_dimensions:[img.naturalWidth,img.naturalHeight],analysis_dimensions:[canvas.width,canvas.height],analysis_scale:ratio,data_url:canvas.toDataURL('image/png')};
+}
+async function loadPhoto(file){
+ if(!file||file.size>MAX_BYTES)throw Error('Choose a photo smaller than 25 MB.');
+ if(file.size===0)throw Error('This file is empty.');
+ if(file.type&&!/^image\/(jpeg|jpg|png|webp|heic|heif)$/.test(file.type))throw Error('Use a JPEG, PNG, WebP or supported HEIC photo, not a document or animation.');
+ const raw=await file.arrayBuffer(),hash=await sha256(raw),url=URL.createObjectURL(file);
+ try{return {...await decodeURL(url),file_name:file.name.slice(0,180),file_bytes:file.size,source_sha256:hash,captured_at:new Date().toISOString()};}
+ finally{URL.revokeObjectURL(url);}
+}
+function pixelsURL(im){
+ const c=document.createElement('canvas');c.width=im.width;c.height=im.height;c.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(im.data),im.width,im.height),0,0);return c.toDataURL('image/png');
+}
+async function downloadJSON(report){
+ const body={...report,format_version:report.format_version??REPORT_FORMAT_VERSION};
+ const canonical=stableStringify(body);
+ const receipt={...body,receipt_sha256:await sha256(canonical),hash_scope:REPORT_HASH_SCOPE};
+ if(globalThis.webkit?.messageHandlers?.cardtruthExport){globalThis.webkit.messageHandlers.cardtruthExport.postMessage(JSON.stringify(receipt));return receipt;}
+ const blob=new Blob([JSON.stringify(receipt,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=url;a.download=`cardtruth-${report.scan_id}.ctscan.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);
+ return receipt;
+}
+async function readReport(file){
+ if(!file||file.size>80*1024*1024)throw Error('Report must be smaller than 80 MB.');
+ let report;try{report=JSON.parse(await file.text());}catch{throw Error('This is not a valid JSON report.');}
+ const legacy=report.format==='cardtruth-inspection'&&report.version==='0.2.0'&&!report.format_version;
+ const current=report.format==='cardtruth-inspection'&&report.format_version===REPORT_FORMAT_VERSION;
+ if((!legacy&&!current)||typeof report.scan_id!=='string'||!report.sides)throw Error('Use a supported CardTruth inspection report.');
+ if(report.receipt_sha256){let {receipt_sha256,hash_scope,...body}=report;let serialized=hash_scope===REPORT_HASH_SCOPE?stableStringify(body):JSON.stringify(body);let computed=await sha256(serialized);if(computed&&computed!==receipt_sha256)throw Error('Report checksum does not match. This file was modified after export.');}
+ for(let key of ['front','back']){let s=report.sides[key];if(!s)continue;
+  if(!/^data:image\/(png|jpeg|webp);base64,/.test(s.analysis_image??''))throw Error('Report is missing a safe embedded evidence image.');
+  if(!Array.isArray(s.annotations)||s.annotations.length>200)throw Error('Invalid annotations.');
+  for(let a of s.annotations)if(![a.x,a.y].every(v=>Number.isFinite(v)&&v>=0&&v<=1)||typeof a.kind!=='string'||a.kind.length>80||typeof a.note!=='string'||a.note.length>500)throw Error('Invalid annotation coordinates or text.');
+ }
+ return report;
+}
+
+// SHA-256 fallback for local documents without SubtleCrypto. Integrity only.
+function sha256Portable(input){
+ const bytes=typeof input==='string'?new TextEncoder().encode(input):input instanceof Uint8Array?input:new Uint8Array(input);
+ const size=Math.ceil((bytes.length+9)/64)*64,data=new Uint8Array(size);data.set(bytes);data[bytes.length]=128;const view=new DataView(data.buffer);
+ view.setUint32(size-8,Math.floor(bytes.length/536870912));view.setUint32(size-4,(bytes.length*8)>>>0);
+ const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+ let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];const W=new Int32Array(64),rotr=(v,n)=>(v>>>n)|(v<<(32-n));
+ for(let offset=0;offset<size;offset+=64){
+  for(let i=0;i<16;i++)W[i]=view.getInt32(offset+4*i);
+  for(let i=16;i<64;i++){let a=W[i-15],b=W[i-2],s0=rotr(a,7)^rotr(a,18)^(a>>>3),s1=rotr(b,17)^rotr(b,19)^(b>>>10);W[i]=(W[i-16]+s0+W[i-7]+s1)|0;}
+  let [a,b,c,d,e,f,g,h]=H;
+  for(let i=0;i<64;i++){let s1=rotr(e,6)^rotr(e,11)^rotr(e,25),ch=(e&f)^(~e&g),t1=(h+s1+ch+K[i]+W[i])|0,s0=rotr(a,2)^rotr(a,13)^rotr(a,22),maj=(a&b)^(a&c)^(b&c),t2=(s0+maj)|0;h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;}
+  H=H.map((v,i)=>(v+[a,b,c,d,e,f,g,h][i])|0);
+ }return H.map(v=>(v>>>0).toString(16).padStart(8,'0')).join('');
+}
+
+/** Original synthetic optical target for exercising the software. Not a Pokémon card. */
+function demoPhoto(side){
+ const c=document.createElement('canvas');c.width=1250;c.height=1550;let g=c.getContext('2d');
+ g.fillStyle='#202934';g.fillRect(0,0,c.width,c.height);
+ const x=215,y=198,w=819,h=1144,l=side==='front'?39:42,r=side==='front'?35:42,t=42,b=40;
+ g.fillStyle=side==='front'?'#dac176':'#55779f';g.fillRect(x,y,w,h);
+ g.fillStyle='#142e37';g.fillRect(x+l,y+t,w-l-r,h-t-b);
+ g.strokeStyle='#829994';g.lineWidth=2;g.strokeRect(x+l+25,y+t+30,w-l-r-50,h-t-b-60);
+ g.fillStyle='#d5e1d9';g.font='22px monospace';g.fillText('CARDTRUTH  /  OPTICAL TARGET',x+75,y+115);
+ g.font='bold 63px sans-serif';g.fillText(side==='front'?'SURFACE':'REVERSE',x+75,y+205);
+ g.font='21px sans-serif';g.fillStyle='#a4baba';g.fillText('Synthetic sample. Not a collectible.',x+75,y+250);
+ const cx=x+w/2,cy=y+h/2+20;
+ for(let k=0;k<6;k++){g.beginPath();g.arc(cx,cy,60+k*34,0,Math.PI*2);g.strokeStyle=k%2?'#84a49b':'#526e72';g.lineWidth=k%2?3:1;g.stroke();}
+ g.strokeStyle='#d5c57c';g.lineWidth=2;g.beginPath();g.moveTo(cx-225,cy);g.lineTo(cx+225,cy);g.moveTo(cx,cy-225);g.lineTo(cx,cy+225);g.stroke();
+ g.font='18px monospace';g.fillStyle='#c5d4d0';g.fillText('LENS / LIGHT / ALIGNMENT',x+75,y+h-240);
+ for(let k=0;k<24;k++){g.fillStyle=k%2?'#bdd1c7':'#1c4147';g.fillRect(x+75+k*24,y+h-195,12,55);}
+ g.font='18px sans-serif';g.fillStyle='#a1b4b0';g.fillText('For software testing only. No grading ground truth.',x+75,y+h-90);
+ if(side==='front'){g.fillStyle='#faf7e8';g.fillRect(x+w-8,y+340,6,10);g.fillRect(x+8,y+h-230,5,9);}
+ return {canvas:c,quad:[[x,y],[x+w-1,y],[x+w-1,y+h-1],[x,y+h-1]]};
+}
+
+
+const $=id=>document.getElementById(id);
+const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nextPaint=()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+const uuid=()=>globalThis.crypto?.randomUUID?.()??`scan-${Date.now()}-${Math.random().toString(36).slice(2,9)}`;
+const labelSide=s=>s==='front'?'Front':'Back';
+const fmt=p=>p.map(x=>x.toFixed(1)).join(' / ');
+const fieldNames=['left','right','top','bottom'];
+const kinds=['Area to review','Whitening','Scratch','Print line','Possible dent','Edge chip','Corner wear','Other'];
+let state={id:uuid(),created:new Date().toISOString(),active:'front',sides:{front:null,back:null},name:'',dirty:false,zoom:1,outcome:null};
+let dragging=null,busy=false,toastTimer,markMode=false,pendingMark=null,currentPixels=null;
+
+function notify(message){$('toast').textContent=message;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,6500);}
+async function working(label,fn){if(busy)return;busy=true;$('busyText').textContent=label;$('busy').hidden=false;try{await nextPaint();await fn();}catch(e){notify(e.message??'Something went wrong. Your existing inspection has been kept.');}finally{busy=false;$('busy').hidden=true;}}
+function side(){return state.sides[state.active];}
+function dirty(){state.dirty=true;}
+function anySynthetic(){return Object.values(state.sides).some(s=>s?.synthetic);}
+function setActive(key){if(busy)return;state.active=key;state.zoom=1;markMode=false;pendingMark=null;render();}
+function chooseFile(camera=false){$(camera?'cameraInput':'photoInput').value='';$(camera?'cameraInput':'photoInput').click();}
+
+function makeSide(photo,synthetic=false){
+ const proposal=proposeQuad(photo.pixels),w=photo.pixels.width,h=photo.pixels.height;
+ return {photo,synthetic,quad:proposal??[[w*.16,h*.08],[w*.84,h*.08],[w*.84,h*.92],[w*.16,h*.92]],proposal_found:!!proposal,
+  phase:'outline',rectified:null,borders:null,measurement:null,quality:null,error_px:2,borderless:false,annotations:[],candidates:[],references:[],outline_confirmed_at:null,borders_confirmed_at:null};
+}
+async function acceptPhoto(file){
+ const key=state.active;
+ await working('Reading and checking your photo…',async()=>{
+  const photo=await loadPhoto(file);const entry=makeSide(photo);state.sides[key]=entry;state.active=key;state.zoom=1;markMode=false;pendingMark=null;dirty();render();
+  notify(entry.proposal_found?'Outline suggested. Check all four handles before continuing.':'No reliable outline found. Position all four handles manually.');
+ });
+}
+async function confirmOutline(){
+ const s=side();if(!s)return;
+ await working('Correcting perspective…',async()=>{
+  validateQuad(s.quad);const image=rectify(s.photo.pixels,s.quad);
+  s.rectified=image;s.borders=proposeBorder(image);s.quality=quality(image);s.candidates=edgeCandidates(image);s.measurement=null;s.borderless=false;s.phase='borders';s.outline_confirmed_at=new Date().toISOString();s.borders_confirmed_at=null;s.annotations=[];
+  state.zoom=1;dirty();render();notify('Check the inner border guides. Artwork boundaries are not always the grading border.');
+ });
+}
+function validateBorders(s){
+ const b=s.borders,w=s.rectified.width,h=s.rectified.height;
+ if(fieldNames.some(k=>!Number.isFinite(b[k])||b[k]<=0)||b.left+b.right>=w*.85||b.top+b.bottom>=h*.85)throw Error('Use positive border widths, leaving the printed area inside the guides.');
+}
+function measureSide(){
+ const s=side();if(!s?.rectified)return;
+ try{
+  validateBorders(s);
+  if(!s.quality.usable)throw Error('This image failed a basic quality check. Replace it, or skip centering and keep inspection notes only.');
+  s.measurement={lr:axisMeasurement(s.borders.left,s.borders.right,s.error_px),tb:axisMeasurement(s.borders.top,s.borders.bottom,s.error_px),method:'operator_confirmed_image_borders',geometry:'nominal_aspect_rectification_not_physical_size',borders_px:{...s.borders}};
+  s.phase='review';s.borders_confirmed_at=new Date().toISOString();s.borderless=false;markMode=false;pendingMark=null;dirty();render();
+  notify(`${labelSide(state.active)} centering measured. This is not an overall grade.`);
+ }catch(e){notify(e.message);}
+}
+function skipCentering(){const s=side();s.measurement=null;s.borderless=true;s.phase='review';s.borders_confirmed_at=null;markMode=false;dirty();render();notify('Centering left unknown. You can still inspect and annotate the photo.');}
+function setBorder(key,value){const s=side();if(!s?.borders)return;let max=(key==='left'||key==='right'?s.rectified.width:s.rectified.height)*.4;s.borders[key]=Math.max(.5,Math.min(max,Number(value)||.5));s.measurement=null;s.borders_confirmed_at=null;dirty();drawOverlay();updateLiveMetrics();}
+function updateLiveMetrics(){const s=side();if(!s?.borders)return;try{$('liveLR').textContent=fmt(axisMeasurement(s.borders.left,s.borders.right,s.error_px).pair);$('liveTB').textContent=fmt(axisMeasurement(s.borders.top,s.borders.bottom,s.error_px).pair);}catch{}fieldNames.forEach(k=>{const el=$(`border-${k}`);if(el&&document.activeElement!==el)el.value=s.borders[k].toFixed(1);});}
+function editOutline(){const s=side();s.phase='outline';s.measurement=null;s.borders_confirmed_at=null;s.outline_confirmed_at=null;markMode=false;pendingMark=null;state.zoom=1;dirty();render();}
+function editBorders(){const s=side();s.phase='borders';s.measurement=null;s.borderless=false;s.borders_confirmed_at=null;markMode=false;pendingMark=null;dirty();render();}
+
+function render(){
+ const s=side();$('demoBanner').hidden=!anySynthetic();$('reportBtn').disabled=!Object.values(state.sides).some(Boolean);$('replaceBtn').textContent=s?'Replace photo':'Add photo';$('rotateBtn').disabled=!s;
+ for(let key of ['front','back']){const v=state.sides[key];$(`${key}Tab`).setAttribute('aria-selected',String(key===state.active));$(`${key}State`).className='side-dot'+(v?(v.phase==='review'?' done':' loaded'):'');}
+ document.querySelectorAll('[data-step]').forEach(btn=>btn.classList.toggle('active',btn.dataset.step===(!s?'photos':s.phase==='review'?'review':'align')));
+ $('emptyStage').hidden=!!s;$('board').hidden=!s;$('zoomControls').hidden=!s;
+ $('emptyStage').querySelector('h2').textContent=`Add the ${state.active} of your card`;$('chooseBtn').textContent=`Choose ${state.active} photo`;
+ if(s){
+  currentPixels=s.phase==='outline'?s.photo.pixels:s.rectified;
+  const c=$('photoCanvas');c.width=currentPixels.width;c.height=currentPixels.height;c.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(currentPixels.data),currentPixels.width,currentPixels.height),0,0);
+  $('overlay').setAttribute('viewBox',`0 0 ${currentPixels.width} ${currentPixels.height}`);
+  $('imageCaption').textContent=s.phase==='outline'?`${s.photo.original_dimensions.join(' × ')} source pixels · drag the outer handles`:`${currentPixels.width} × ${currentPixels.height} analysis pixels · ${s.phase==='borders'?'confirm the printed border':markMode?'tap an area to annotate':'visual evidence, not a certified grade'}`;
+ }else{$('imageCaption').textContent='Photos are processed in this browser, not sent to a server.';currentPixels=null;}
+ renderInspector();layout();renderCrops();renderReferences();
+}
+function layout(){if(!currentPixels)return;const stage=$('stage');let availW=Math.max(200,stage.clientWidth-40),availH=Math.max(240,stage.clientHeight-40),ratio=currentPixels.width/currentPixels.height;
+ const width=Math.min(availW,availH*ratio)*state.zoom;$('board').style.width=`${width}px`;$('board').style.height=`${width/ratio}px`;$('zoomLabel').textContent=`${Math.round(state.zoom*100)}%`;drawOverlay();}
+function drawOverlay(){
+ const s=side();if(!s||!currentPixels)return;const w=currentPixels.width,h=currentPixels.height,k=w/Math.max(1,$('board').clientWidth),stroke=1.4*k;
+ function handle(x,y,i,title,color='#b3ecb7'){
+  return `<g data-handle="${i}" role="button" tabindex="0" aria-label="${title}. Use arrow keys to adjust; shift for larger steps."><circle cx="${x}" cy="${y}" r="${23*k}" fill="transparent"/><circle cx="${x}" cy="${y}" r="${6*k}" fill="${color}" stroke="#102e2a" stroke-width="${1.8*k}"/><text x="${x+10*k}" y="${y-10*k}" fill="white" font-family="sans-serif" font-size="${11*k}" stroke="#162f33" stroke-width="${2.5*k}" paint-order="stroke">${i+1}</text></g>`;
+ }
+ let html='';
+ if(s.phase==='outline'){
+  html=`<polygon points="${s.quad.map(p=>p.join(',')).join(' ')}" fill="#73a98b12" stroke="#b3ecb7" stroke-width="${stroke}"/>`;
+  s.quad.forEach((p,i)=>html+=handle(...p,i,['Top-left corner','Top-right corner','Bottom-right corner','Bottom-left corner'][i]));
+ }else if(s.phase==='borders'){
+  let {left:l,right:r,top:t,bottom:b}=s.borders;
+  html=`<path d="M${l} 0V${h}M${w-r} 0V${h}M0 ${t}H${w}M0 ${h-b}H${w}" fill="none" stroke="#c4eda8" stroke-width="${stroke}" stroke-dasharray="${6*k} ${4*k}"/><rect x="${l}" y="${t}" width="${Math.max(1,w-l-r)}" height="${Math.max(1,h-t-b)}" fill="none" stroke="#c4eda8" stroke-width="${stroke}"/>`;
+  [[l,h/2],[w-r,h/2],[w/2,t],[w/2,h-b]].forEach((p,i)=>html+=handle(...p,i,`${fieldNames[i]} border`));
+ }else{
+  for(const p of s.candidates)html+=`<circle cx="${p.x*w}" cy="${p.y*h}" r="${9*k}" fill="none" stroke="#f6cf70" stroke-width="${1.5*k}" stroke-dasharray="${3*k} ${2*k}"/>`;
+  s.annotations.forEach((p,i)=>html+=`<g><circle cx="${p.x*w}" cy="${p.y*h}" r="${10*k}" fill="#d5efbd" stroke="#174438" stroke-width="${1.3*k}"/><text x="${p.x*w}" y="${p.y*h+3.5*k}" text-anchor="middle" font-size="${10*k}" fill="#163f36" font-family="sans-serif">${i+1}</text></g>`);
+  if(pendingMark)html+=`<circle cx="${pendingMark.x*w}" cy="${pendingMark.y*h}" r="${15*k}" stroke="white" fill="none" stroke-width="${2*k}"/>`;
+ }
+ $('overlay').innerHTML=html;$('overlay').style.cursor=markMode?'crosshair':s.phase==='review'?'default':'grab';
+}
+function qualityHTML(s){if(!s.quality)return '';return s.quality.issues.map(i=>`<div class="quality-item ${i.level==='block'?'block':''}">${escapeHTML(i.text)}</div>`).join('')||'<p class="status-line">Basic image checks did not flag a problem.</p>';}
+function renderInspector(){
+ const s=side(),el=$('inspector');
+ if(!s){el.innerHTML=`<h2>Start with two photos.</h2><p class="description">A simple inspection begins with a clear front and back. Your camera is enough to get started.</p><div class="field"><label for="cardName">Card name or number (optional)</label><input id="cardName" placeholder="e.g. Charizard · 4/102" maxlength="150" value="${escapeHTML(state.name)}"></div><button class="primary full" id="inspectorChoose">Choose ${state.active} photo</button><button class="secondary full camera-button" id="useCamera">Take a photo</button><div class="divider"></div><h3>What you get</h3><p class="small muted">Confirmed border ratios, enlarged corners, editable inspection notes and an exportable evidence report.</p><div class="hintbox">Overall grades stay unknown until a prediction model has been trained and validated.</div><p class="tiny muted">Not sure where to begin? The synthetic demo walks through the same tools, using a test target.</p>`;
+  $('cardName').oninput=e=>{state.name=e.target.value;dirty();};$('inspectorChoose').onclick=()=>chooseFile();$('useCamera').onclick=()=>chooseFile(true);return;
+ }
+ if(s.phase==='outline'){
+  el.innerHTML=`<span class="pill">${labelSide(state.active)} · outer outline</span><h2 style="margin-top:14px">Find the real edges.</h2><p class="description">Drag each numbered handle to a card corner. Use the intersection of the straight edges, not the rounded tip.</p><div class="hintbox ${s.proposal_found?'':'warning'}">${s.proposal_found?'This is a suggested outline. Check it carefully before measuring.':'No dependable outline was found. Set all four corners yourself.'}</div><button id="confirmOutline" class="primary full">Confirm card outline</button><p class="coordinate-help">Handles also work with arrow keys. Hold Shift for larger adjustments.</p><details><summary>Edit corner coordinates</summary><div class="outline-values">${s.quad.map((p,i)=>`<label>Corner ${i+1} · X<input type="number" data-quad="${i},0" step="1" min="0" max="${s.photo.pixels.width-1}" value="${p[0].toFixed(1)}"></label><label>Corner ${i+1} · Y<input type="number" data-quad="${i},1" step="1" min="0" max="${s.photo.pixels.height-1}" value="${p[1].toFixed(1)}"></label>`).join('')}</div></details><div class="divider"></div><h3>Keep it square.</h3><p class="small muted">The outline corrects perspective. It does not correct lens distortion or prove the card’s dimensions. Avoid severe tilt.</p><p class="tiny muted">Source: ${s.photo.original_dimensions.join(' × ')} px<br>Analysis: ${s.photo.analysis_dimensions.join(' × ')} px<br>No upscaling is used to claim more detail.</p>`;
+  $('confirmOutline').onclick=confirmOutline;
+  document.querySelectorAll('[data-quad]').forEach(input=>input.oninput=e=>{const [i,axis]=e.target.dataset.quad.split(',').map(Number);const max=axis?s.photo.pixels.height-1:s.photo.pixels.width-1;s.quad[i][axis]=Math.max(0,Math.min(max,Number(e.target.value)||0));dirty();drawOverlay();});
+ }else if(s.phase==='borders'){
+  el.innerHTML=`<span class="pill">${labelSide(state.active)} · printed border</span><h2 style="margin-top:14px">Check the inner guides.</h2><p class="description">Place the green guides where the outer printed border ends. Adjust them on the image or enter widths below.</p><div class="number-grid">${fieldNames.map(k=>`<div class="field"><label for="border-${k}">${k[0].toUpperCase()+k.slice(1)} · pixels</label><input id="border-${k}" type="number" min="0.5" step="0.5" value="${s.borders[k].toFixed(1)}"></div>`).join('')}</div><div class="metric"><span>Left / right</span><strong id="liveLR"></strong></div><div class="metric"><span>Top / bottom</span><strong id="liveTB"></strong></div><div class="field"><label for="errorPixels">Assumed border-width error · ± pixels</label><input id="errorPixels" type="number" min="0.5" max="20" step="0.5" value="${s.error_px}"></div><p class="measure-fine">The range is a sensitivity bound, not a calibrated confidence interval. Two pixels is only a starting assumption, not a measured accuracy.</p>${qualityHTML(s)}<button id="measureBtn" class="primary full" ${s.quality.usable?'':'disabled'}>Confirm border measurement</button><button id="skipBtn" class="quiet full">Full-art / unclear border? Skip centering</button><button id="editOutline" class="quiet full">Back to the outer outline</button>`;
+  fieldNames.forEach(k=>$(`border-${k}`).oninput=e=>setBorder(k,e.target.value));$('errorPixels').onchange=e=>{s.error_px=Math.max(.5,Math.min(20,Number(e.target.value)||2));e.target.value=s.error_px;dirty();updateLiveMetrics();};$('measureBtn').onclick=measureSide;$('skipBtn').onclick=skipCentering;$('editOutline').onclick=editOutline;updateLiveMetrics();
+ }else{
+  el.innerHTML=`<span class="pill">${labelSide(state.active)} · evidence review</span><h2 style="margin-top:14px">Look closer.</h2>${s.measurement?`<div class="metric"><span>Left / right</span><strong>${fmt(s.measurement.lr.pair)}</strong></div><div class="metric"><span>Top / bottom</span><strong>${fmt(s.measurement.tb.pair)}</strong></div><p class="measure-fine">Based on your confirmed border guides. Sensitivity and grading-reference checks are in the report.</p>`:'<div class="hintbox warning">Centering is unknown for this side. The photo remains available for visual review.</div>'}<p class="description">Inspect the enlarged corners below. Mark anything worth a closer look. A photo cannot rule out hidden damage.</p><button id="markBtn" class="${markMode?'secondary':'primary'} full">${markMode?'Cancel marking':'Mark an area on the card'}</button>${pendingMark?`<div class="field"><label for="markKind">Your observation</label><select id="markKind">${kinds.map(k=>`<option>${k}</option>`).join('')}</select></div><div class="field"><label for="markNote">Note (optional)</label><textarea id="markNote" maxlength="500" placeholder="What do you see under a different light?"></textarea></div><button id="saveMark" class="primary full">Save observation</button>`:''}<p class="inspection-legend">Solid markers: your notes.<br>Dashed amber circles: automatic bright-spot suggestions, not confirmed damage.</p><p class="tiny muted">${s.candidates.length?s.candidates.length+' bright spot(s) suggested. These can be glare, printing or wear.':'No bright spots were suggested. Scratches, dents and other defects can still be present.'}</p><ul class="annotation-list">${s.annotations.map((a,i)=>`<li><span class="annotation-number">${i+1}</span><div>${escapeHTML(a.kind)}<small>${escapeHTML(a.note||'User-reported observation')}</small></div><button class="remove" data-remove="${i}" aria-label="Remove observation ${i+1}">×</button></li>`).join('')}</ul><button id="addReference" class="secondary full">Add another lighting angle</button><p class="tiny muted" style="margin-top:9px">Extra photos are reference evidence only. No 3D reconstruction is claimed.</p><div class="divider"></div><button id="nextSide" class="primary full">${state.active==='front'?'Continue to back':'View inspection report'}</button><button id="editBorders" class="quiet full">Edit border guides</button>`;
+  $('markBtn').onclick=()=>{markMode=!markMode;pendingMark=null;renderInspector();drawOverlay();$('imageCaption').textContent=markMode?'Tap the card where you want to add a note.':'Visual evidence, not a certified grade.';if(markMode)$('board').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});};
+  if($('saveMark'))$('saveMark').onclick=()=>{if(!pendingMark)return;if(s.annotations.length>=200)return notify('The report supports up to 200 observations per side.');s.annotations.push({id:uuid(),...pendingMark,kind:$('markKind').value,note:$('markNote').value.trim(),evidence:'user_reported',created_at:new Date().toISOString()});pendingMark=null;markMode=false;dirty();render();};
+  document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{s.annotations.splice(Number(b.dataset.remove),1);dirty();render();});
+  $('addReference').onclick=()=>{$('referenceInput').value='';$('referenceInput').click();};$('nextSide').onclick=()=>state.active==='front'?setActive('back'):showReport();$('editBorders').onclick=editBorders;
+ }
+}
+function renderCrops(){
+ const s=side(),gallery=$('cornerGallery');gallery.hidden=!s?.rectified||s.phase!=='review';gallery.replaceChildren();if(gallery.hidden)return;
+ const image=$('photoCanvas'),size=Math.round(Math.min(image.width,image.height)*.24);
+ [[0,0,'Top left'],[image.width-size,0,'Top right'],[0,image.height-size,'Bottom left'],[image.width-size,image.height-size,'Bottom right']].forEach(([x,y,label])=>{
+  const fig=document.createElement('figure'),c=document.createElement('canvas'),caption=document.createElement('figcaption');c.width=240;c.height=240;c.getContext('2d').drawImage(image,x,y,size,size,0,0,240,240);caption.textContent=label+' · enlarged view';fig.append(c,caption);gallery.append(fig);
+ });
+}
+function renderReferences(){
+ const s=side(),g=$('referenceGallery');g.replaceChildren();g.hidden=!s?.references.length;if(g.hidden)return;
+ const text=document.createElement('p');text.textContent='Additional lighting-angle evidence. Click to inspect; not used for depth measurements.';g.append(text);
+ s.references.forEach((r,i)=>{const b=document.createElement('button'),img=document.createElement('img');img.src=r.data_url;img.alt=`${labelSide(state.active)} extra angle ${i+1}`;b.append(img);b.onclick=()=>{
+  const d=document.createElement('dialog');const heading=document.createElement('div');heading.className='dialog-heading';const h=document.createElement('h2');h.textContent=`Reference angle ${i+1}`;const close=document.createElement('button');close.className='icon-btn';close.textContent='×';close.setAttribute('aria-label','Close reference photo');close.onclick=()=>d.close();heading.append(h,close);const image=document.createElement('img');image.src=r.data_url;image.className='reference-dialog-img';image.alt=img.alt;d.append(heading,image);document.body.append(d);d.onclose=()=>d.remove();d.showModal();
+ };g.append(b);});
+}
+
+function pointerCoords(event){let box=$('overlay').getBoundingClientRect();return [Math.max(0,Math.min(currentPixels.width-1,(event.clientX-box.left)/box.width*currentPixels.width)),Math.max(0,Math.min(currentPixels.height-1,(event.clientY-box.top)/box.height*currentPixels.height))];}
+$('overlay').onpointerdown=e=>{
+ const s=side();if(!s)return;let handle=e.target.closest('[data-handle]');
+ if(handle&&s.phase!=='review'){e.preventDefault();dragging={index:Number(handle.dataset.handle)};$('overlay').setPointerCapture(e.pointerId);}
+ else if(s.phase==='review'&&markMode){let [x,y]=pointerCoords(e);pendingMark={x:x/currentPixels.width,y:y/currentPixels.height};renderInspector();drawOverlay();$('markKind')?.focus();}
+};
+$('overlay').onpointermove=e=>{
+ if(!dragging)return;e.preventDefault();const s=side(),[x,y]=pointerCoords(e),i=dragging.index;
+ if(s.phase==='outline'){s.quad[i]=[x,y];dirty();drawOverlay();}
+ else{const values=[x,currentPixels.width-x,y,currentPixels.height-y];setBorder(fieldNames[i],values[i]);}
+};
+$('overlay').onpointerup=e=>{dragging=null;if($('overlay').hasPointerCapture(e.pointerId))$('overlay').releasePointerCapture(e.pointerId);};
+$('overlay').onpointercancel=()=>dragging=null;
+$('overlay').onkeydown=e=>{
+ if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))return;let g=e.target.closest('[data-handle]');if(!g)return;e.preventDefault();let s=side(),i=Number(g.dataset.handle),step=e.shiftKey?10:1,dx=e.key==='ArrowLeft'?-step:e.key==='ArrowRight'?step:0,dy=e.key==='ArrowUp'?-step:e.key==='ArrowDown'?step:0;
+ if(s.phase==='outline'){s.quad[i][0]=Math.max(0,Math.min(s.photo.pixels.width-1,s.quad[i][0]+dx));s.quad[i][1]=Math.max(0,Math.min(s.photo.pixels.height-1,s.quad[i][1]+dy));dirty();drawOverlay();}
+ else if(s.phase==='borders'){let change=[dx,-dx,dy,-dy][i];setBorder(fieldNames[i],s.borders[fieldNames[i]]+change);}
+ $('overlay').querySelector(`[data-handle="${i}"]`)?.focus();
+};
+
+function reportBody(){
+ const sides={};for(let key of ['front','back']){let s=state.sides[key];if(!s){sides[key]=null;continue;}
+  sides[key]={synthetic:s.synthetic,source_file_name:s.photo.file_name,source_file_sha256:s.photo.source_sha256,source_dimensions:s.photo.original_dimensions,analysis_dimensions:s.photo.analysis_dimensions,analysis_scale:s.photo.analysis_scale,rotation_degrees:s.photo.rotation_degrees??0,
+   analysis_image:s.photo.data_url,outline:s.quad,outline_confirmed_at:s.outline_confirmed_at,borders_confirmed_at:s.borders_confirmed_at,phase:s.phase,borderless:s.borderless,borders:s.borders,assumed_border_width_error_px:s.error_px,measurement:s.measurement,quality:s.quality,annotations:s.annotations,candidates:s.candidates,references:s.references};
+ }
+ return {format:'cardtruth-inspection',version:VERSION,scan_id:state.id,created_at:state.created,exported_at:new Date().toISOString(),card_name:state.name,synthetic:Object.values(sides).some(s=>s?.synthetic),sides,
+  grade_prediction:{status:'withheld',reason:'No validated prediction model or calibrated physical-defect pipeline is installed.',probabilities:[]},
+  centering_references:standardsSummary(sides.front?.measurement,sides.back?.measurement),authenticity:{status:'not_assessed'},surface_depth:{status:'not_measured'},returned_grade:state.outcome,
+  provenance:{processing:'on_device',measurement:'operator_confirmed_photo_geometry',image_copies:'analysis_resolution_not_original_files',timestamp:'device_asserted_not_verified',hash:'integrity_only_not_authentication'},
+  limitations:['No guaranteed or predicted third-party grade.','Image ratios depend on operator border selection, camera optics and card design.','Pixel-error ranges are assumed sensitivity bounds, not calibrated confidence intervals.','Bright-spot suggestions are not confirmed flaws. Absence of suggestions does not establish absence of damage.','No measured dent depth, LiDAR metrology, counterfeit determination or verified physical-card identity.','Retain the original images; these embedded images are processed evidence copies.']};
+}
+const stateText={within_published_guideline:'Within the centering guideline',outside_published_guideline:'Outside the centering guideline',boundary_uncertain:'Boundary uncertain',not_measured:'Both sides must be measured'};
+function showReport(){
+ if(!Object.values(state.sides).some(Boolean))return;const r=reportBody();
+ let rows='';for(let key of ['front','back'])for(let [axis,title] of [['lr','Left / right'],['tb','Top / bottom']]){let m=r.sides[key]?.measurement?.[axis];rows+=`<tr><td>${labelSide(key)} · ${title}</td><td>${m?fmt(m.pair):'Not measured'}</td><td class="optional-col">${m?`±${m.assumed_border_width_error_px} px`:'—'}</td><td>${m?m.major_interval.map(v=>v.toFixed(1)).join('–')+'%':'Unknown'}</td></tr>`;}
+ let html=`${r.synthetic?'<div class="hintbox warning">SYNTHETIC DEMO: This report contains test-target images, not validated card results.</div>':''}<div class="report-verdict"><h3>Overall grade: withheld</h3><p>There is no validated grading model in this build. The useful output here is your photo evidence and confirmed centering, not a made-up score.</p></div><div class="field"><label for="reportName">Card name or number (optional, user-entered)</label><input id="reportName" maxlength="150" value="${escapeHTML(state.name)}" placeholder="Name this inspection"></div><h3>Confirmed centering</h3><table class="report-table"><thead><tr><th>Side / axis</th><th>Ratio</th><th class="optional-col">Assumed error</th><th>Major-side range</th></tr></thead><tbody>${rows}</tbody></table><p class="small muted">The range shows sensitivity to your assumed border-width placement error. It is not a certified or statistically calibrated confidence interval.</p><h3>Published centering references, not grades</h3>${r.centering_references.map(p=>`<div class="report-grader"><div><h3>${p.name}</h3><small>Reviewed ${p.reviewed_at}</small></div><div>${p.checks.length?p.checks.map(c=>`<p><strong>${c.label}:</strong> ${stateText[c.status]}</p><p class="tiny muted">Front ~${c.front_limit}/${100-c.front_limit}; back ~${c.back_limit}/${100-c.back_limit}.</p>`).join(''):`<p>${escapeHTML(p.note)}</p>`}<a href="${p.source}" target="_blank" rel="noopener noreferrer">Official reference</a></div></div>`).join('')}<div class="hintbox">Meeting a centering guideline does not establish a grade. Corners, edges, surface, authenticity and grader judgment still matter.</div><h3>Your visual evidence</h3><div class="report-photo-strip">${['front','back'].filter(key=>state.sides[key]).map(key=>`<figure><img src="${state.sides[key].rectified?pixelsURL(state.sides[key].rectified):state.sides[key].photo.data_url}" alt="${labelSide(key)} evidence"><figcaption>${labelSide(key)} · ${state.sides[key].annotations.length} user note(s)</figcaption></figure>`).join('')}</div><ul class="report-notes">${['front','back'].flatMap(key=>(r.sides[key]?.annotations??[]).map(a=>`<li>${labelSide(key)}: ${escapeHTML(a.kind)}${a.note?' · '+escapeHTML(a.note):''} <em>(user-reported)</em></li>`)).join('')||'<li>No observations were added. This does not mean the card is free of damage.</li>'}<li>Authenticity: not assessed. Surface depth: not measured.</li><li>Extra lighting-angle photos: ${Object.values(state.sides).reduce((n,s)=>n+(s?.references.length??0),0)}. Stored for visual review, not reconstructed.</li></ul><details class="outcome-editor"><summary>Record an actual returned grade</summary><p class="small muted">Keep a future grading result with the original inspection. This is user-reported, not issuer-verified, and does not automatically train a model.</p><div class="outcome-grid"><div class="field"><label for="outcomeGrader">Grading company</label><select id="outcomeGrader"><option>PSA</option><option>CGC</option><option>BGS</option></select></div><div class="field"><label for="outcomeGrade">Returned grade label</label><select id="outcomeGrade"></select></div></div><button class="secondary" id="saveOutcome" style="margin-top:12px">Save returned result</button><p class="small muted" id="outcomeStatus" style="margin-top:12px"></p></details><details><summary>Limits and provenance</summary><ul class="report-notes">${r.limitations.map(x=>`<li>${escapeHTML(x)}</li>`).join('')}</ul><p class="small muted">Original-file hashes identify input bytes, not a unique physical card. The report checksum is not an independent signature or trusted timestamp.</p></details><p class="report-meta">Inspection ${escapeHTML(r.scan_id)} · Created ${escapeHTML(r.created_at)} · CardTruth ${VERSION}</p>`;
+ $('reportContent').innerHTML=html;$('reportName').oninput=e=>{state.name=e.target.value;dirty();};
+ $('outcomeGrader').value=state.outcome?.grader??'PSA';
+ function grades(){const g=$('outcomeGrader').value;let labels=g==='CGC'?['Pristine 10','Gem Mint 10','9.5','9','8.5','8','7.5','7','6.5','6','5.5','5','4.5','4','3.5','3','2.5','2','1.5','1']:g==='BGS'?['Black Label 10','Pristine 10','9.5','9','8.5','8','7.5','7','6.5','6','5.5','5','4.5','4','3.5','3','2.5','2','1.5','1']:['10','9','8.5','8','7.5','7','6.5','6','5.5','5','4.5','4','3.5','3','2.5','2','1.5','1'];labels.push('No numeric grade');$('outcomeGrade').replaceChildren(...labels.map(l=>new Option(l,l)));if(state.outcome?.grader===g)$('outcomeGrade').value=state.outcome.grade;}
+ grades();$('outcomeGrader').onchange=grades;$('outcomeStatus').textContent=state.outcome?`Saved: ${state.outcome.grader} ${state.outcome.grade} (user-reported).`:'';
+ $('saveOutcome').onclick=()=>{state.outcome={grader:$('outcomeGrader').value,grade:$('outcomeGrade').value,entered_at:new Date().toISOString(),verification:'user_reported_not_verified'};dirty();$('outcomeStatus').textContent=`Saved: ${state.outcome.grader} ${state.outcome.grade}. Export the report to keep it.`;};
+ if(!$('reportDialog').open)$('reportDialog').showModal();
+}
+async function importInspection(file){
+ await working('Opening your saved inspection…',async()=>{
+  const report=await readReport(file),next={id:report.scan_id,created:report.created_at,active:'front',name:String(report.card_name??'').slice(0,150),sides:{front:null,back:null},zoom:1,dirty:false,outcome:report.returned_grade??null};
+  for(let key of ['front','back']){const v=report.sides[key];if(!v)continue;let decoded=await decodeURL(v.analysis_image),entry=makeSide({...decoded,file_name:v.source_file_name??'Imported evidence',source_sha256:v.source_file_sha256??null,original_dimensions:v.source_dimensions??decoded.original_dimensions,analysis_scale:v.analysis_scale??1,rotation_degrees:v.rotation_degrees??0},!!v.synthetic);
+   validateQuad(v.outline);entry.quad=v.outline;
+   entry.error_px=Number.isFinite(v.assumed_border_width_error_px)?Math.max(.5,Math.min(20,v.assumed_border_width_error_px)):2;
+   if(v.phase==='borders'||v.phase==='review'){
+    entry.rectified=rectify(entry.photo.pixels,entry.quad);entry.quality=quality(entry.rectified);entry.borders=v.borders??proposeBorder(entry.rectified);validateBorders(entry);
+    entry.candidates=edgeCandidates(entry.rectified);entry.phase=v.phase;entry.borderless=!!v.borderless;entry.outline_confirmed_at=v.outline_confirmed_at??null;entry.borders_confirmed_at=v.borders_confirmed_at??null;
+    if(entry.phase==='review'&&!entry.borderless&&entry.quality.usable)entry.measurement={lr:axisMeasurement(entry.borders.left,entry.borders.right,entry.error_px),tb:axisMeasurement(entry.borders.top,entry.borders.bottom,entry.error_px),method:'recomputed_from_imported_operator_guides',borders_px:entry.borders};
+   }
+   entry.annotations=v.annotations.map(a=>({...a,evidence:'user_reported'}));
+   entry.references=(Array.isArray(v.references)?v.references:[]).slice(0,8).filter(x=>/^data:image\/(png|jpeg|webp);base64,/.test(x.data_url??''));next.sides[key]=entry;
+  }
+  if(!next.sides.front&&!next.sides.back)throw Error('The report contains no usable evidence photographs.');
+  if(!next.sides.front)next.active='back';state=next;markMode=false;pendingMark=null;render();notify('Report reopened. Ratios were recalculated from its saved guides.');
+ });
+}
+
+$('chooseBtn').onclick=()=>chooseFile();$('replaceBtn').onclick=()=>chooseFile();$('photoInput').onchange=e=>e.target.files[0]&&acceptPhoto(e.target.files[0]);$('cameraInput').onchange=e=>e.target.files[0]&&acceptPhoto(e.target.files[0]);
+$('frontTab').onclick=()=>setActive('front');$('backTab').onclick=()=>setActive('back');$('reportBtn').onclick=showReport;
+$('closeReport').onclick=()=>$('reportDialog').close();$('helpBtn').onclick=()=>$('helpDialog').showModal();$('closeHelp').onclick=()=>$('helpDialog').close();
+$('downloadBtn').onclick=async()=>{try{await downloadJSON(reportBody());state.dirty=false;notify('Report download started. Keep the original photographs separately.');}catch(e){notify(e.message);}};
+$('printBtn').onclick=()=>window.print();$('importBtn').onclick=()=>{$('reportInput').value='';$('reportInput').click();};$('reportInput').onchange=e=>e.target.files[0]&&importInspection(e.target.files[0]);
+$('resetBtn').onclick=()=>{if(state.dirty&&!confirm('Discard this unsaved inspection? Save your report first to keep it.'))return;state={id:uuid(),created:new Date().toISOString(),active:'front',sides:{front:null,back:null},name:'',dirty:false,zoom:1,outcome:null};pendingMark=null;markMode=false;render();};
+$('demoBtn').onclick=()=>{if(state.dirty&&!confirm('Replace the unsaved inspection with synthetic demo images?'))return;working('Preparing synthetic test targets…',async()=>{
+ state={id:uuid(),created:new Date().toISOString(),active:'front',sides:{front:null,back:null},name:'Synthetic optical target',dirty:true,zoom:1,outcome:null};
+ for(let key of ['front','back']){let {canvas,quad}=demoPhoto(key),url=canvas.toDataURL('image/png'),photo=await decodeURL(url);photo.file_name=`synthetic-${key}.png`;photo.source_sha256=await sha256(await (await new Promise(resolve=>canvas.toBlob(resolve,'image/png'))).arrayBuffer());let s=makeSide(photo,true);s.quad=quad;state.sides[key]=s;}
+ markMode=false;pendingMark=null;render();notify('Demo loaded. These are synthetic optical targets, not card-grading results.');
+ });};
+$('rotateBtn').onclick=()=>{const s=side();if(!s)return;if(s.annotations.length&&!confirm('Rotating will reset this side’s geometry and observations. Continue?'))return;working('Rotating photo…',async()=>{
+ let src=document.createElement('canvas');src.width=s.photo.pixels.width;src.height=s.photo.pixels.height;src.getContext('2d').putImageData(s.photo.pixels,0,0);let c=document.createElement('canvas');c.width=src.height;c.height=src.width;let g=c.getContext('2d');g.translate(c.width,0);g.rotate(Math.PI/2);g.drawImage(src,0,0);
+ let updated={...s.photo,pixels:g.getImageData(0,0,c.width,c.height),data_url:c.toDataURL('image/png'),analysis_dimensions:[c.width,c.height],rotation_degrees:((s.photo.rotation_degrees??0)+90)%360};state.sides[state.active]=makeSide(updated,s.synthetic);dirty();render();
+ });};
+$('referenceInput').onchange=e=>{const s=side(),files=Array.from(e.target.files);if(!s||!files.length)return;working('Adding lighting-angle evidence…',async()=>{
+ if(s.references.length+files.length>8)throw Error('Keep up to eight reference photos per side.');
+ const additions=[];for(let file of files){const p=await loadPhoto(file),small=await decodeURL(p.data_url,1280);additions.push({file_name:p.file_name,source_sha256:p.source_sha256,source_dimensions:p.original_dimensions,data_url:small.data_url,evidence:'reference_photo_only'});}
+ s.references.push(...additions);dirty();renderReferences();notify('Reference photos added. They are not used for depth or automatic grade prediction.');
+ });};
+$('zoomIn').onclick=()=>{state.zoom=Math.min(3,state.zoom+.5);layout();};$('zoomOut').onclick=()=>{state.zoom=Math.max(1,state.zoom-.5);layout();};
+new ResizeObserver(layout).observe($('stage'));
+document.querySelectorAll('[data-step]').forEach(b=>b.onclick=()=>{const s=side();if(b.dataset.step==='photos'){if(!s)chooseFile();else notify('Use the front/back tabs or Replace photo to change your images.');}else if(b.dataset.step==='align'){if(!s)notify('Add a photo first.');else if(s.phase==='review')editBorders();else $('inspector').scrollIntoView({behavior:'smooth',block:'nearest'});}else if(s?.phase==='review')$('inspector').scrollIntoView({behavior:'smooth',block:'nearest'});else notify('Confirm the outline, then measure or skip centering before reviewing.');});
+window.addEventListener('beforeunload',e=>{if(state.dirty){e.preventDefault();e.returnValue='';}});
+render();
+
+// In-process iOS bridge. Images are decoded and checked using the same browser path.
+window.CardTruth=Object.freeze({version:VERSION,importNativeBundle:async bundle=>{
+ if(busy)throw Error('Inspector is busy.');
+ if(!bundle||!Array.isArray(bundle.frames)||bundle.frames.length!==2)throw Error('Front and back frames are required.');
+ const prepared={front:null,back:null};
+ for(const frame of bundle.frames){
+  if(!['front','back'].includes(frame.side)||prepared[frame.side]||typeof frame.jpeg_base64!=='string'||frame.jpeg_base64.length>36_000_000)throw Error('Invalid native capture bundle.');
+  const decoded=atob(frame.jpeg_base64),bytes=new Uint8Array(decoded.length);for(let i=0;i<decoded.length;i++)bytes[i]=decoded.charCodeAt(i);
+  const photo=await loadPhoto(new File([bytes],`${frame.side}.jpg`,{type:'image/jpeg'}));prepared[frame.side]=makeSide(photo,false);
+ }
+ if(!prepared.front||!prepared.back)throw Error('Both card sides are required.');
+ state={id:uuid(),created:new Date().toISOString(),active:'front',sides:prepared,name:'',dirty:true,zoom:1,outcome:null};markMode=false;pendingMark=null;render();return {ok:true};
+}});
+
+})();
+</script>
+</body></html>

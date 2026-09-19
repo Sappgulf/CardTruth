@@ -1,0 +1,15 @@
+{
+  "display_name": "PSA",
+  "source": "https://www.psacard.com/gradingstandards",
+  "centering_guidelines": [
+    {
+      "label": "Gem Mint 10",
+      "front_major_max": 55,
+      "back_major_max": 75
+    }
+  ],
+  "verification": "published_guideline_reviewed",
+  "notes": "Approximate centering guideline only; subjective exceptions and other criteria apply.",
+  "version": "centering-reference-2026-09-19",
+  "reviewed_at": "2026-09-19"
+}

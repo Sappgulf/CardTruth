@@ -1,0 +1,33 @@
+name: Bug report
+description: Report reproducible CardTruth software behavior
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      placeholder: "1. Open ...\n2. Select ...\n3. Observe ..."
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: CardTruth version
+      placeholder: 0.2.1
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface
+      options: [Standalone browser app, Local API/CLI, iOS source, GradeRig research code, Other]
+  - type: textarea
+    id: privacy
+    attributes:
+      label: Sanitized evidence
+      description: Do not upload private card photos, certificate numbers, API keys, or personal submission data.

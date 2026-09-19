@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="color-scheme" content="light"><meta name="description" content="Private, on-device card inspection with evidence, centering measurement and no invented grades.">
+<title>CardTruth · Card inspection</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='8' y='3' width='24' height='34' rx='5' fill='%23126156'/%3E%3Cpath d='M14 19l4 4 9-10' fill='none' stroke='white' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a href="#workspace" class="skip">Skip to inspection</a>
+<header class="topbar"><div class="brand"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 30"><rect x="3" y="2" width="18" height="26" rx="4"/><path d="m7 15 3 3 7-8"/></svg></span><strong>CardTruth<span class="version">0.2</span></strong></div><div class="top-actions"><span class="privacy"><span aria-hidden="true">●</span> On-device processing</span><button class="quiet" id="helpBtn">How it works</button></div></header>
+<div id="demoBanner" class="demo-banner" hidden>Synthetic demo images. These are optical test targets, not real cards or validated grading results.</div>
+<section class="titlebar"><div><h1>Inspect before you submit.</h1><p>A closer look. Clear measurements. Evidence you can keep.</p></div><button id="reportBtn" class="primary" disabled>View report <span aria-hidden="true">↗</span></button></section>
+<main id="workspace" class="workspace">
+<aside class="workflow" aria-label="Inspection workflow">
+ <ol class="steps"><li><button data-step="photos" class="step active"><span class="step-number">1</span><span><strong>Photograph</strong><small>Front and back</small></span></button></li><li><button data-step="align" class="step"><span class="step-number">2</span><span><strong>Measure</strong><small>Confirm the borders</small></span></button></li><li><button data-step="review" class="step"><span class="step-number">3</span><span><strong>Inspect</strong><small>Review the evidence</small></span></button></li></ol>
+ <div class="workflow-bottom"><p class="small muted">Start with a bare card on a plain, matte background. Keep the camera square to it.</p><button class="secondary full" id="demoBtn">Try the demo target</button><button class="quiet full" id="importBtn">Open saved report</button><button class="quiet full" id="resetBtn">New inspection</button><p class="tiny muted">No accounts. No uploads.<br>Save your report before closing.</p></div>
+</aside>
+<section class="image-workspace" aria-label="Card images">
+ <div class="image-toolbar"><div class="side-tabs" role="tablist" aria-label="Card side"><button id="frontTab" data-side="front" role="tab" aria-selected="true">Front <span id="frontState" class="side-dot"></span></button><button id="backTab" data-side="back" role="tab" aria-selected="false">Back <span id="backState" class="side-dot"></span></button></div><div class="image-actions"><button class="icon-btn" id="rotateBtn" title="Rotate photo clockwise" aria-label="Rotate photo clockwise" disabled>↻</button><button class="quiet" id="replaceBtn">Add photo</button></div></div>
+ <div class="stage" id="stage">
+  <div class="empty-stage" id="emptyStage"><div class="capture-outline" aria-hidden="true"><svg viewBox="0 0 82 112"><path d="M19 3H7a4 4 0 0 0-4 4v12m60-16h12a4 4 0 0 1 4 4v12M3 93v12a4 4 0 0 0 4 4h12m44 0h12a4 4 0 0 0 4-4V93"/><rect x="16" y="17" width="50" height="77" rx="6"/><path d="m31 56 7 7 15-17"/></svg></div><h2>Add the front of your card</h2><p>Choose a clear photo, or use your phone’s camera.</p><button class="light-button" id="chooseBtn">Choose front photo</button><span class="stage-hint">JPEG, PNG, WebP · up to 25 MB</span></div>
+  <div class="board" id="board" hidden><canvas id="photoCanvas"></canvas><svg id="overlay" xmlns="http://www.w3.org/2000/svg" aria-label="Card outline and evidence editor"></svg></div>
+ </div>
+ <div class="image-caption"><span id="imageCaption">Photos are processed in this browser, not sent to a server.</span><div class="zoom-controls" id="zoomControls" hidden><button id="zoomOut" aria-label="Zoom out">−</button><span id="zoomLabel">100%</span><button id="zoomIn" aria-label="Zoom in">+</button></div></div>
+ <div id="cornerGallery" class="corner-gallery" hidden></div>
+ <div id="referenceGallery" class="reference-gallery" hidden></div>
+</section>
+<aside class="inspector" id="inspector" aria-label="Inspection controls"></aside>
+</main>
+<footer class="footer"><span>Measurement first. No invented certainty.</span><span>Independent inspection tool. Not an authenticated or certified grade.</span></footer>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="busy" id="busy" role="status" aria-live="polite" hidden><div><span class="spinner" aria-hidden="true"></span><p id="busyText">Preparing photo…</p><small>Your images stay on this device.</small></div></div>
+<input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" hidden>
+<input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
+<input type="file" id="referenceInput" accept="image/*" multiple hidden>
+<input type="file" id="reportInput" accept=".json,application/json" hidden>
+<dialog id="reportDialog"><div class="dialog-heading"><div><h2>Your inspection report</h2><p>What the images support, and what they don’t.</p></div><button id="closeReport" class="icon-btn" aria-label="Close report">×</button></div><div id="reportContent"></div><div class="dialog-footer"><button id="downloadBtn" class="primary">Save report + evidence</button><button id="printBtn" class="secondary">Print report</button><small>Includes analysis-size images, not your original files. Keep the originals.</small></div></dialog>
+<dialog id="helpDialog"><div class="dialog-heading"><h2>A useful inspection, not a magic grade.</h2><button id="closeHelp" class="icon-btn" aria-label="Close instructions">×</button></div><div class="help-body"><h3>1. Photograph the actual card</h3><p>Use front and back photos without a sleeve or holder. Avoid glare. Keep all four corners in frame. Do not press, flatten, clean or alter the card for this scan.</p><h3>2. Confirm the geometry</h3><p>Align the four outer handles to the intersections of the straight card edges, not the tips of rounded corners. Then align the four inner guides to the printed border’s inner boundary. Suggestions must be checked. For full-art, borderless or ambiguous designs, choose “Skip centering.”</p><h3>3. Inspect and keep evidence</h3><p>Review the enlarged corners, use extra lighting-angle photos and mark areas for closer inspection. Automatic bright-spot suggestions can also be glare or normal printing.</p><h3>What “accurate” means here</h3><p>Ratios come from the borders you confirm. Their range shows sensitivity to an assumed pixel-placement error; it is not a calibrated confidence interval. A source photograph still has lens, focus, perspective and lighting limits.</p><p>No trained grading model, verified authenticity screen, micrometer surface scanner or hardware-calibrated GradeRig is included. LiDAR is not accessed by this browser app. A published centering check is not a prediction of PSA, CGC or BGS results.</p><h3>Privacy and reopening</h3><p>There are no network uploads, analytics, logins or automatic storage. The session lives in memory until you save a report. Reopen that JSON file using “Open saved report.” The checksum detects accidental edits; it is not a digital signature or proof of when a card was photographed.</p><p>Use a normal browser. A phone’s Files or attachment preview may not run an HTML application. “Take a photo” opens device capture where supported; desktop browsers may show a file chooser. This build does not run a live-view browser camera or a LiDAR stream.</p></div></dialog>
+<script type="module" src="app.js"></script>
+</body></html>

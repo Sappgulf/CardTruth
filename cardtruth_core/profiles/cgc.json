@@ -1,0 +1,20 @@
+{
+  "display_name": "CGC",
+  "source": "https://www.cgccards.com/card-grading/grading-scale/",
+  "centering_guidelines": [
+    {
+      "label": "Gem Mint 10",
+      "front_major_max": 55,
+      "back_major_max": 75
+    },
+    {
+      "label": "Pristine 10",
+      "front_major_max": 50,
+      "back_major_max": 50
+    }
+  ],
+  "verification": "published_guideline_reviewed",
+  "notes": "The two 10 labels remain separate. With finite measurement uncertainty exact 50/50 cannot be established.",
+  "version": "centering-reference-2026-09-19",
+  "reviewed_at": "2026-09-19"
+}

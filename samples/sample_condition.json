@@ -1,0 +1,63 @@
+{
+  "scan_id": "demo-001",
+  "card_id": "pokemon-demo-card",
+  "capture_tier": "graderig",
+  "capture_confidence": 0.96,
+  "centering": {
+    "front_lr": [
+      52.4,
+      47.6
+    ],
+    "front_tb": [
+      50.9,
+      49.1
+    ],
+    "back_lr": [
+      54.0,
+      46.0
+    ],
+    "back_tb": [
+      51.7,
+      48.3
+    ],
+    "confidence": 0.97
+  },
+  "defects": [
+    {
+      "id": "d-001",
+      "side": "back",
+      "kind": "whitening",
+      "severity": 0.1,
+      "salience": 0.18,
+      "confidence": 0.97,
+      "evidence": "observed",
+      "x": 0.91,
+      "y": 0.12,
+      "footprint_mm2": 0.08,
+      "visible_angle_fraction": 0.71
+    },
+    {
+      "id": "d-002",
+      "side": "front",
+      "kind": "print_line",
+      "severity": 0.07,
+      "salience": 0.1,
+      "confidence": 0.91,
+      "evidence": "observed",
+      "x": 0.54,
+      "y": 0.46,
+      "footprint_mm2": 0.12,
+      "visible_angle_fraction": 0.38
+    }
+  ],
+  "gloss_uniformity": 0.992,
+  "warp_peak_to_peak_mm": 0.11,
+  "authenticity": {
+    "status": "no_obvious_flags",
+    "confidence": 0.72,
+    "alteration_flags": []
+  },
+  "notes": [
+    "Synthetic demo; not a real card result."
+  ]
+}

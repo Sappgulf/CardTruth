@@ -1,0 +1,25 @@
+name: CardTruth
+options:
+  bundleIdPrefix: com.cardtruth
+  deploymentTarget:
+    iOS: "18.0"
+targets:
+  CardTruth:
+    type: application
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: CardTruth
+      - path: CardTruthCore
+    info:
+      path: Build/Info.plist
+      properties:
+        CFBundleDisplayName: CardTruth
+        NSCameraUsageDescription: "CardTruth captures front and back photos for local card inspection."
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UILaunchScreen: {}
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.cardtruth.app
+        SWIFT_VERSION: "5.0"
+        TARGETED_DEVICE_FAMILY: "1,2"
