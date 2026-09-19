@@ -1,9 +1,9 @@
 /** Pure, dependency-free image geometry. All defect proposals require human review. */
-export const VERSION = '0.2.1';
+export const VERSION = '0.2.2';
 export const REFERENCES = {
  psa:{name:'PSA',url:'https://www.psacard.com/gradingstandards',reviewed:'2026-09-19',rules:[{label:'Gem Mint 10',front:55,back:75}]},
  cgc:{name:'CGC',url:'https://www.cgccards.com/card-grading/grading-scale/',reviewed:'2026-09-19',rules:[{label:'Gem Mint 10',front:55,back:75},{label:'Pristine 10',front:50,back:50}]},
- bgs:{name:'Beckett BGS',url:'https://www.beckett.com/grading/scale',reviewed:'2026-09-19',rules:[],note:'Official scale was unavailable at review. No unverified thresholds substituted.'}
+ bgs:{name:'Beckett BGS',url:'https://www.beckett.com/grading/scale',reviewed:'2026-09-19',rules:[{label:'Pristine 10',front:50,back:60},{label:'Gem Mint 9.5',front:55,frontOneAxis:50,back:60},{label:'Mint 9',front:55,back:70},{label:'Near Mint/Mint 8',front:60,back:80},{label:'Near Mint 7',front:65,back:90},{label:'Excellent Mint 6',front:70,back:95},{label:'Excellent 5',front:75,back:95},{label:'Very Good/Excellent 4',front:80,back:100},{label:'Very Good 3',front:85,back:100},{label:'Good 2',front:90,back:100},{label:'Poor 1',front:100,back:100}],note:'Published centering references. The live scale URL is currently in maintenance; directional criteria were cross-checked against Beckett-published material. Centering alone never establishes the grade.'}
 };
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 export function axisMeasurement(a,b,error=2){
@@ -138,12 +138,14 @@ export function edgeCandidates(im){
  }return hits;
 }
 export function standardsSummary(front,back){
+ const combine=states=>states.includes('outside_published_guideline')?'outside_published_guideline':states.includes('boundary_uncertain')?'boundary_uncertain':'within_published_guideline';
+ const oneAxis=(intervals,limit)=>{const s=intervals.map(i=>assessInterval(i,limit));return s.includes('within_published_guideline')?'within_published_guideline':s.includes('boundary_uncertain')?'boundary_uncertain':'outside_published_guideline';};
  return Object.entries(REFERENCES).map(([id,p])=>({id,name:p.name,source:p.url,reviewed_at:p.reviewed,scope:'centering_only',grade_withheld:true,
   checks:p.rules.map(rule=>{
-   if(!front||!back)return {label:rule.label,status:'not_measured',front_limit:rule.front,back_limit:rule.back};
-   const f=[Math.max(front.lr.major_interval[0],front.tb.major_interval[0]),Math.max(front.lr.major_interval[1],front.tb.major_interval[1])];
-   const b=[Math.max(back.lr.major_interval[0],back.tb.major_interval[0]),Math.max(back.lr.major_interval[1],back.tb.major_interval[1])];
-   let states=[assessInterval(f,rule.front),assessInterval(b,rule.back)];
-   return {label:rule.label,status:states.includes('outside_published_guideline')?'outside_published_guideline':states.includes('boundary_uncertain')?'boundary_uncertain':'within_published_guideline',front_limit:rule.front,back_limit:rule.back};
+   if(!front||!back)return {label:rule.label,status:'not_measured',front_limit:rule.front,back_limit:rule.back,front_one_axis_limit:rule.frontOneAxis??null};
+   const f=[front.lr.major_interval,front.tb.major_interval],b=[back.lr.major_interval,back.tb.major_interval];
+   let states=[...f.map(i=>assessInterval(i,rule.front)),...b.map(i=>assessInterval(i,rule.back))];
+   if(Number.isFinite(rule.frontOneAxis))states.push(oneAxis(f,rule.frontOneAxis));
+   return {label:rule.label,status:combine(states),front_limit:rule.front,back_limit:rule.back,front_one_axis_limit:rule.frontOneAxis??null};
   }),note:p.note??'Approximate published guidelines only. Meeting centering does not establish the grade.'}));
 }

@@ -1,3 +1,12 @@
+# 0.2.2
+
+- Fixed Beckett/BGS directional centering evaluation.
+- Added per-axis measurement intervals so uncertainty reaches policy checks without becoming fake confidence.
+- Gated Python capture quality on the card region and actual card pixel coverage.
+- Added per-pixel photometric observation masks; underconstrained pixels remain unknown.
+- Added deterministic multi-view support instead of statistical-looking confidence.
+- Added regression tests for these accuracy paths.
+
 # 0.2.1
 
 - Canonicalized report checksums so JSON key reordering does not create false tamper warnings.

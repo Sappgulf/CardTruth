@@ -1,9 +1,68 @@
 {
   "display_name": "Beckett BGS",
   "source": "https://www.beckett.com/grading/scale",
-  "centering_guidelines": [],
-  "verification": "source_unavailable",
-  "notes": "Official scale redirected to maintenance at review. Prior unverified numeric rules removed; no substituted thresholds.",
-  "version": "centering-reference-2026-09-19",
+  "centering_guidelines": [
+    {
+      "label": "Pristine 10",
+      "front_major_max": 50,
+      "back_major_max": 60,
+      "note": "Published Beckett criteria: 50/50 all around on front; 60/40 or better on back."
+    },
+    {
+      "label": "Gem Mint 9.5",
+      "front_major_max": 55,
+      "front_one_axis_major_max": 50,
+      "back_major_max": 60,
+      "note": "Published Beckett criteria: 50/50 one way and 55/45 the other on front; 60/40 or better on back."
+    },
+    {
+      "label": "Mint 9",
+      "front_major_max": 55,
+      "back_major_max": 70
+    },
+    {
+      "label": "Near Mint/Mint 8",
+      "front_major_max": 60,
+      "back_major_max": 80
+    },
+    {
+      "label": "Near Mint 7",
+      "front_major_max": 65,
+      "back_major_max": 90
+    },
+    {
+      "label": "Excellent Mint 6",
+      "front_major_max": 70,
+      "back_major_max": 95
+    },
+    {
+      "label": "Excellent 5",
+      "front_major_max": 75,
+      "back_major_max": 95
+    },
+    {
+      "label": "Very Good/Excellent 4",
+      "front_major_max": 80,
+      "back_major_max": 100
+    },
+    {
+      "label": "Very Good 3",
+      "front_major_max": 85,
+      "back_major_max": 100
+    },
+    {
+      "label": "Good 2",
+      "front_major_max": 90,
+      "back_major_max": 100
+    },
+    {
+      "label": "Poor 1",
+      "front_major_max": 100,
+      "back_major_max": 100
+    }
+  ],
+  "verification": "official_scale_search_snapshot_plus_official_legacy_pdf",
+  "notes": "Beckett's live scale URL currently redirects to maintenance. Criteria were cross-checked against a fresh official-domain search snapshot and Beckett-published material. General grading guidelines only.",
+  "version": "centering-reference-2026-09-19.2",
   "reviewed_at": "2026-09-19"
 }

@@ -1,4 +1,4 @@
-# CardTruth 0.2.1
+# CardTruth 0.2.2
 
 A local-first card inspection app. Load front/back photographs, confirm the card outline, measure visible border ratios, inspect enlarged corners, annotate evidence, and save a portable, checksummed report. Canonical report hashing keeps integrity checks stable across harmless JSON key reordering.
 
@@ -30,7 +30,7 @@ Read [START_HERE.md](START_HERE.md) for the inspection workflow and phone option
 | Uncertainty | Sensitivity range for an explicitly assumed border-width placement error; not a confidence interval |
 | Evidence | Enlarged corner views, image zoom, user-marked observations, extra lighting-angle photos |
 | Review assistance | Conservative bright-edge-spot proposals; these can be artwork, glare or defects |
-| Standards | Sourced PSA/CGC top-grade centering references only; boundary cases remain uncertain |
+| Standards | Sourced PSA/CGC/BGS centering references; directional rules are preserved and boundary cases remain uncertain |
 | Reports | Export/reopen .ctscan.json with embedded analysis images, notes, returned-grade records, canonical integrity checks, and legacy 0.2.0 compatibility |
 | Privacy | Browser analysis is in memory. No automatic saving or training. Export before closing. |
 | iOS source | Real AVFoundation JPEG capture, review/retake state machine, bundled inspector, share-sheet bridge; not SDK/device validated |
@@ -44,7 +44,7 @@ Read [START_HERE.md](START_HERE.md) for the inspection workflow and phone option
 - Bright-spot suggestions are not confirmed damage. No suggestions does not mean no defects.
 - Display zoom does not create optical detail. Analysis copies are capped at 2200 pixels on the long edge; keep original images separately.
 - No LiDAR, absolute surface-height map, automatic card identity, trained defect classifier, issuer certificate verification, hardware controller or grader outcome model is active in the browser.
-- BGS numeric guidelines were not embedded because its official scale URL returned maintenance during review. The UI does not silently substitute another company's rules.
+- BGS centering references are embedded from Beckett-published criteria, including the directional 9.5 rule. They remain centering-only guidance, not a full-grade prediction.
 
 ## Optional Python API and CLI
 

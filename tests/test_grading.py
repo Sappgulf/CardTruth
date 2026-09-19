@@ -23,7 +23,10 @@ def test_borderline_is_not_a_pass():
 def test_clear_outside():
     assert centering_checks("psa",58,60,1)[0]["status"]=="outside_published_guideline"
 
-def test_bgs_does_not_invent_unverified_rules():assert centering_checks("bgs",50,50)==[]
+def test_bgs_rules_are_present_and_grade_is_still_withheld():
+    checks=centering_checks("bgs",50,50,0)
+    assert checks
+    assert forecast("bgs",sample()).withheld
 
 def test_cgc_tens_remain_distinct():
     labels=[r["target_label"] for r in centering_checks("cgc",50,50)]

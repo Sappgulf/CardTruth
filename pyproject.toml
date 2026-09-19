@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cardtruth"
-version = "0.2.1"
+version = "0.2.2"
 description = "Local-first trading-card inspection, without invented grading probabilities"
 requires-python = ">=3.11"
 dependencies = ["numpy>=1.26,<3", "opencv-python-headless>=4.10,<5", "pydantic>=2.8,<3", "fastapi>=0.115,<1", "uvicorn>=0.30,<1", "pillow>=11.0,<13"]

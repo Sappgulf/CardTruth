@@ -19,7 +19,11 @@ class CenteringMeasurement(StrictModel):
     back_lr: tuple[float,float]
     back_tb: tuple[float,float]
     confidence: float | None = Field(default=None, ge=0, le=1, description="Legacy input only; not calibrated by this software")
-    sensitivity_pp: float = Field(default=2, ge=0, le=50, description="Assumed percentage-point sensitivity, not a confidence interval")
+    sensitivity_pp: float = Field(default=2, ge=0, le=50, description="Fallback percentage-point sensitivity when measured intervals are unavailable; not a confidence interval")
+    front_lr_major_interval: tuple[float,float] | None = None
+    front_tb_major_interval: tuple[float,float] | None = None
+    back_lr_major_interval: tuple[float,float] | None = None
+    back_tb_major_interval: tuple[float,float] | None = None
 
     @field_validator("front_lr","front_tb","back_lr","back_tb")
     @classmethod
@@ -28,8 +32,24 @@ class CenteringMeasurement(StrictModel):
             raise ValueError("Centering must be two finite percentages in [0,100] totaling 100")
         return v
 
+    @field_validator("front_lr_major_interval","front_tb_major_interval","back_lr_major_interval","back_tb_major_interval")
+    @classmethod
+    def major_interval(cls, v):
+        if v is None:return None
+        if any(not isfinite(x) or not 50<=x<=100 for x in v) or v[0]>v[1]:
+            raise ValueError("Major-side interval must be finite, ordered, and inside [50,100]")
+        return v
+
     def worst_front_major(self): return max(*self.front_lr,*self.front_tb)
     def worst_back_major(self): return max(*self.back_lr,*self.back_tb)
+    def _interval(self,pair,measured):
+        if measured is not None:return measured
+        major=max(pair)
+        return (max(50.0,major-self.sensitivity_pp),min(100.0,major+self.sensitivity_pp))
+    def front_axis_intervals(self):
+        return (self._interval(self.front_lr,self.front_lr_major_interval),self._interval(self.front_tb,self.front_tb_major_interval))
+    def back_axis_intervals(self):
+        return (self._interval(self.back_lr,self.back_lr_major_interval),self._interval(self.back_tb,self.back_tb_major_interval))
 
 class Defect(StrictModel):
     id: str = Field(min_length=1,max_length=100)
