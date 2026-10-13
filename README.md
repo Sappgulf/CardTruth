@@ -1,80 +1,50 @@
-# CardTruth 0.2.2
+# CardTruth
 
-A local-first card inspection app. Load front/back photographs, confirm the card outline, measure visible border ratios, inspect enlarged corners, annotate evidence, and save a portable, checksummed report. Canonical report hashing keeps integrity checks stable across harmless JSON key reordering.
+**Local-first trading-card inspection, with evidence you can review and keep.**
 
-**This is a working inspection prototype, not a validated card grader.** It does not promise a PSA/CGC/BGS outcome, authenticate cards, measure microscopic dent depth, or operate GradeRig hardware. The previous heuristic grade probabilities have been removed rather than represented as accuracy.
+Load front and back photographs, confirm the card outline, measure visible border ratios, inspect enlarged corners, and export a portable report. CardTruth 0.2.2 runs as a standalone HTML file, with optional Python tooling and iOS capture source.
 
-## Start here
+**Working inspection prototype. Overall grade prediction is withheld.** CardTruth does not authenticate cards or promise a PSA, CGC, or BGS outcome. Its software tests do not establish real-card grading accuracy.
 
-Open **CardTruth.html** in a normal desktop browser. It is a single bundled file with no application dependencies, accounts, API keys, tracking, remote inference or image uploads. Browser/OS security policies may restrict running downloaded HTML. A file preview inside a messaging app or iPhone Files is not the same as a browser session.
+[First inspection](START_HERE.md) · [Project guide](PROJECT_GUIDE.md) · [Accuracy contract](docs/ACCURACY_CONTRACT.md) · [Contributing](CONTRIBUTING.md)
 
-The ZIP also includes **Start-CardTruth.command** for macOS and **Start-CardTruth.bat** for Windows. They try a local Python launcher and fall back to opening the HTML. Alternatively, from this folder run:
+## Try it locally
+
+1. Download and extract this repository using **Code → Download ZIP**, or clone it.
+2. Open **`CardTruth.html`** in a normal desktop browser. No application dependencies, account, or API key are needed.
+3. Choose **Try demo** to learn the controls. The demo uses labeled synthetic optical targets, not real cards or a grading-validation dataset.
+
+If your browser or operating system restricts downloaded HTML, run the included macOS or Windows launcher, or use Python's standard-library launcher from the repository folder:
 
 ```sh
 python launch.py
 ```
 
-The launcher uses only Python's standard library, binds to 127.0.0.1, serves the app, and never receives the photographs. Stop it with Ctrl+C. A different free port can be selected with `python launch.py --port 8766`.
+It opens a loopback-only page at `http://127.0.0.1:8765`; photographs stay in the browser. Stop it with Ctrl+C. See the [project guide](PROJECT_GUIDE.md) for another port and optional tooling.
 
-**Choose “Try demo” first.** It creates clearly labeled synthetic optical test targets. These are not real Pokémon cards or a card-grading validation dataset.
+A file-manager or messaging-app preview may not execute the app. For phone support and native-app limitations, read [Start here](START_HERE.md).
 
-Read [START_HERE.md](START_HERE.md) for the inspection workflow and phone options.
+## From photograph to report
 
-## What works
+- **Confirm the geometry.** Adjust the proposed outline with handles, keyboard controls, or numeric coordinates, then confirm the actual card edges.
+- **Inspect centering.** Correct perspective and position the inner border guides to calculate left/right and top/bottom ratios. Placement-error ranges are sensitivity bounds, not statistical confidence intervals.
+- **Review visible evidence.** Zoom into corners, annotate observations, and add lighting-angle photos. Bright-edge-spot suggestions require human review; artwork and glare can also trigger them.
+- **Keep a portable record.** Export and reopen `.ctscan.json` reports containing analysis images, measurements, notes, and user-reported returned grades.
 
-| Capability | Current implementation |
-|---|---|
-| Photo input | Front/back import; browser camera-file input where supported; rotation; original-file SHA-256 |
-| Outline | Image-derived proposal, editable handles, keyboard/numeric adjustment, explicit confirmation |
-| Centering | Perspective correction, editable inner border guides, left/right and top/bottom ratios |
-| Uncertainty | Sensitivity range for an explicitly assumed border-width placement error; not a confidence interval |
-| Evidence | Enlarged corner views, image zoom, user-marked observations, extra lighting-angle photos |
-| Review assistance | Conservative bright-edge-spot proposals; these can be artwork, glare or defects |
-| Standards | Sourced PSA/CGC/BGS centering references; directional rules are preserved and boundary cases remain uncertain |
-| Reports | Export/reopen .ctscan.json with embedded analysis images, notes, returned-grade records, canonical integrity checks, and legacy 0.2.0 compatibility |
-| Privacy | Browser analysis is in memory. No automatic saving or training. Export before closing. |
-| iOS source | Real AVFoundation JPEG capture, review/retake state machine, bundled inspector, share-sheet bridge; not SDK/device validated |
-| Python | Optional local inspection API, CLI, strict schemas, packaged profiles, experimental photometry utilities |
+The browser workflow has no image uploads, remote inference, or automatic saving. **Export before closing or reloading, and keep your original photographs separately.** Report images are analysis copies capped at 2200 pixels on the long edge. Checksums check integrity; they do not prove authenticity, ownership, or capture time.
 
-## Deliberate limits
+## Know the limits
 
-- Overall grade prediction is **withheld**. No trained/calibrated outcome model is shipped.
-- Centering depends on correct outer and inner border selection. Full-art, asymmetric or borderless designs can invalidate ordinary border measurements. Use “Skip centering” instead of inventing an art boundary.
-- The 63:88 rectification aspect is nominal, not a measurement of card dimensions. It cannot establish trimming or physical authenticity.
-- Bright-spot suggestions are not confirmed damage. No suggestions does not mean no defects.
-- Display zoom does not create optical detail. Analysis copies are capped at 2200 pixels on the long edge; keep original images separately.
-- No LiDAR, absolute surface-height map, automatic card identity, trained defect classifier, issuer certificate verification, hardware controller or grader outcome model is active in the browser.
-- BGS centering references are embedded from Beckett-published criteria, including the directional 9.5 rule. They remain centering-only guidance, not a full-grade prediction.
+Centering requires meaningful, correctly selected borders. Full-art, asymmetric, and borderless designs can invalidate the measurement; use **Skip centering** when the boundary is ambiguous. Published PSA/CGC/BGS references are centering-only guidance, including directional rules and uncertain boundary cases.
 
-## Optional Python API and CLI
+The nominal 63:88 rectification is not a physical dimension measurement. Zoom cannot reveal detail that the photograph did not capture. No microscopic dent-depth measurement, trained defect classifier, hardware controller, or calibrated grader-outcome model is active in the browser.
 
-Python 3.11+ is required for this optional path, not for the standalone HTML.
+## Explore the project
 
-```sh
-python -m venv .venv
-# macOS/Linux: source .venv/bin/activate
-# Windows: .venv\Scripts\activate
-python -m pip install -e ".[dev]"
-python -m pytest -q
-python -m cardtruth_core.cli inspect your-card.jpg
-python -m cardtruth_core.cli grade samples/sample_condition.json
-uvicorn services.api.main:app --host 127.0.0.1 --port 8000
-```
+- [Project guide](PROJECT_GUIDE.md): capability details, limitations, Python API/CLI setup, and source map
+- [Architecture](docs/ARCHITECTURE.md): browser inspector, Python core, local API, iOS source, and GradeRig research
+- [Verification report](docs/TEST_REPORT.md): recorded software checks and remaining accuracy gates
+- [Validation plan](docs/VALIDATION.md) and [accuracy contract](docs/ACCURACY_CONTRACT.md): evidence required before making physical-accuracy claims
+- [Contributing](CONTRIBUTING.md): development setup and contribution standards
 
-The `grade` compatibility command returns abstention plus applicable centering references, not invented probabilities. The optional API is for trusted local use, not public hosting. The standalone app does not call it.
-
-## Source map
-
-- `apps/web`: dependency-free interface, imaging math, IO, synthetic fixtures.
-- `cardtruth_core`: validated models, image inspection, published-rule references, research photometry.
-- `services/api`: optional FastAPI service and packaged app.
-- `apps/ios`: capture app source and independently testable Swift state machine.
-- `tests`: Python, JavaScript and reproducible browser checks.
-- `docs`: audit, measured test results, optics limits and release gates.
-- `firmware/graderig`: future protocol design only, not executable hardware firmware.
-
-Rebuild the standalone file and both embedded copies with `python tools/build_standalone.py`.
-
-## Validation status
-
-See [docs/TEST_REPORT.md](docs/TEST_REPORT.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), and the [accuracy contract](docs/ACCURACY_CONTRACT.md). Software tests verify calculations, boundaries and workflows, not real-card accuracy. No percentage of physical defect recall or exact-grade agreement has been established. No proprietary card images or model weights are included. Grader names belong to their owners; this project is independent and not endorsed by them.
+No physical-defect recall or exact-grade agreement percentage has been established. Grader names belong to their owners; CardTruth is independent and not endorsed by them.
